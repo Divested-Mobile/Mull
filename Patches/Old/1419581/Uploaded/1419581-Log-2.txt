@@ -1,7 +1,0 @@
-Okay so the issue from build [3] is not unrelated.
-The missing drawable "ic_close_light" is part of android/support/v7/mediarouter.
-Mediarouter is not included when MOZ_NATIVE_DEVICES=0
-"ic_close_light" is just an 'X', we can replace it with "android.R.drawable.ic_menu_close_clear_cancel" for now.
-
-Build [4] now compiles successfully.
-The resulting APK *does not* contain GMS.

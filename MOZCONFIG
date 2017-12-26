@@ -1,0 +1,36 @@
+# Build Firefox for Android:
+ac_add_options --enable-application=mobile/android
+ac_add_options --target=arm-linux-androideabi
+
+# With the following Android SDK and NDK:
+ac_add_options --with-android-sdk="/home/emy/.mozbuild/android-sdk-linux"
+ac_add_options --with-android-ndk="/home/emy/.mozbuild/android-ndk-r15c"
+
+ac_add_options --with-branding=mobile/android/branding/divestos
+ac_add_options --disable-eme
+ac_add_options --disable-tests
+ac_add_options --disable-updater
+ac_add_options --disable-crashreporter
+ac_add_options --disable-debug
+ac_add_options --disable-webrtc
+ac_add_options --enable-optimize
+ac_add_options --enable-rust-simd
+ac_add_options --enable-elf-hack
+ac_add_options --enable-strip
+ac_add_options --enable-release
+ac_add_options --enable-hardening
+
+export BUILD_OFFICIAL=1
+export MOZILLA_OFFICIAL=1
+export NIGHTLY_BUILD=
+export MOZ_DEBUG=
+mk_add_options MOZILLA_OFFICIAL=1
+mk_add_options BUILD_OFFICIAL=1
+mk_add_options NIGHTLY_BUILD=
+mk_add_options MOZ_DEBUG=
+
+MOZ_ANDROID_GCM=
+MOZ_NATIVE_DEVICES=
+MOZ_INSTALL_TRACKING=
+MOZ_ANDROID_MMA=
+MOZ_ANDROID_POCKET=

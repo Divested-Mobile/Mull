@@ -1,0 +1,6 @@
+ 0:38.32 :app:generateOfficialPhotonDebugSources
+ 0:40.99 :app:compileOfficialPhotonDebugJavaWithJavac/home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java:191: error: cannot find symbol
+ 0:40.99                 .getDrawable(R.drawable.ic_close_light);
+ 0:40.99                                        ^
+ 0:40.99   symbol:   variable ic_close_light
+ 0:40.99   location: class drawable

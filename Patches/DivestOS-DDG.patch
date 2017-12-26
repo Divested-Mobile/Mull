@@ -1,0 +1,46 @@
+From 162d8d0906e40e24ac5d369f4ee97d8d73a67f1e Mon Sep 17 00:00:00 2001
+From: Tad <tad@spotco.us>
+Date: Tue, 19 Dec 2017 11:44:17 -0500
+Subject: [PATCH] DuckDuckGo: Hide ads and promotions
+
+As great as DuckDuckGo is, and as much as I'd like to support them, their ads are very confusing to users.
+And are often merely links to ad-infested metasearch engines.
+Kinda silly if you think about it.
+Like I'd rather DDG inject Amazon ref links and what not than I would them redirecting unknowning users to the bottomfeeding sites they do.
+---
+ mobile/locales/searchplugins/duckduckgo.xml | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/mobile/locales/searchplugins/duckduckgo.xml b/mobile/locales/searchplugins/duckduckgo.xml
+index 2e5d1d2802c4..e2c6a619cac5 100644
+--- a/mobile/locales/searchplugins/duckduckgo.xml
++++ b/mobile/locales/searchplugins/duckduckgo.xml
+@@ -13,11 +13,23 @@
+ <!-- this is effectively x-moz-phonesearch, but search service expects a text/html entry -->
+ <Url type="text/html" method="GET" template="https://duckduckgo.com/">
+   <Param name="q" value="{searchTerms}" />
+-  <Param name="t" value="fpas" />
++  <Param name="k1" value="-1" />
++  <Param name="kam" value="osm" />
++  <Param name="kak" value="-1" />
++  <Param name="kax" value="-1" />
++  <Param name="kaq" value="-1" />
++  <Param name="kap" value="-1" />
++  <Param name="kao" value="-1" />
+ </Url>
+ <Url type="application/x-moz-tabletsearch" method="GET" template="https://duckduckgo.com/">
+   <Param name="q" value="{searchTerms}" />
+-  <Param name="t" value="ftas" />
++  <Param name="k1" value="-1" />
++  <Param name="kam" value="osm" />
++  <Param name="kak" value="-1" />
++  <Param name="kax" value="-1" />
++  <Param name="kaq" value="-1" />
++  <Param name="kap" value="-1" />
++  <Param name="kao" value="-1" />
+ </Url>
+ <SearchForm>https://duckduckgo.com</SearchForm>
+ </SearchPlugin>
+-- 
+2.14.1
+

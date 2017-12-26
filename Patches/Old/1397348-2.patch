@@ -1,0 +1,88 @@
+From f07341f7f55500b0661a2d38af4d42c5df50406a Mon Sep 17 00:00:00 2001
+From: Tad <tad@spotco.us>
+Date: Mon, 18 Dec 2017 18:45:59 -0500
+Subject: [PATCH] Bug 1419581 - Part 2: Guard PresentationMediaPlayer windows
+ with MOZ_NATIVE_DEVICES.
+
+---
+ widget/android/nsWindow.cpp | 9 ++++++++-
+ widget/android/nsWindow.h   | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/widget/android/nsWindow.cpp b/widget/android/nsWindow.cpp
+index bcd81cdb92b6..422e1c8f1fb9 100644
+--- a/widget/android/nsWindow.cpp
++++ b/widget/android/nsWindow.cpp
+@@ -1135,6 +1135,7 @@ public:
+     }
+ };
+ 
++#ifdef MOZ_NATIVE_DEVICES
+ template<> const char
+ nsWindow::NativePtr<nsWindow::LayerViewSupport>::sName[] = "LayerViewSupport";
+ 
+@@ -1222,7 +1223,7 @@ public:
+ 
+ ANativeWindow* nsWindow::PMPMSupport::sWindow;
+ EGLSurface nsWindow::PMPMSupport::sSurface;
+-
++#endif
+ 
+ nsWindow::GeckoViewSupport::~GeckoViewSupport()
+ {
+@@ -1386,9 +1387,11 @@ nsWindow::InitNatives()
+     nsWindow::GeckoViewSupport::Base::Init();
+     nsWindow::LayerViewSupport::Init();
+     nsWindow::NPZCSupport::Init();
++#ifdef MOZ_NATIVE_DEVICES
+     if (jni::IsFennec()) {
+         nsWindow::PMPMSupport::Init();
+     }
++#endif
+ }
+ 
+ nsWindow*
+@@ -2068,11 +2071,13 @@ nsWindow::GetNativeData(uint32_t aDataType)
+             }
+             return nullptr;
+ 
++#ifdef MOZ_NATIVE_DEVICES
+         case NS_PRESENTATION_WINDOW:
+             return PMPMSupport::sWindow;
+ 
+         case NS_PRESENTATION_SURFACE:
+             return PMPMSupport::sSurface;
++#endif
+     }
+ 
+     return nullptr;
+@@ -2082,9 +2087,11 @@ void
+ nsWindow::SetNativeData(uint32_t aDataType, uintptr_t aVal)
+ {
+     switch (aDataType) {
++#ifdef MOZ_NATIVE_DEVICES
+         case NS_PRESENTATION_SURFACE:
+             PMPMSupport::sSurface = reinterpret_cast<EGLSurface>(aVal);
+             break;
++#endif
+     }
+ }
+ 
+diff --git a/widget/android/nsWindow.h b/widget/android/nsWindow.h
+index 0dc25d10b7bb..43b9e17ff553 100644
+--- a/widget/android/nsWindow.h
++++ b/widget/android/nsWindow.h
+@@ -193,8 +193,10 @@ private:
+     // keep it last in the list, so its destructor is called first.
+     mozilla::UniquePtr<GeckoViewSupport> mGeckoViewSupport;
+ 
++#ifdef MOZ_NATIVE_DEVICES
+     // Class that implements native PresentationMediaPlayerManager calls.
+     class PMPMSupport;
++#endif
+ 
+     mozilla::Atomic<bool, mozilla::ReleaseAcquire> mContentDocumentDisplayed;
+ 
+-- 
+2.14.1
+

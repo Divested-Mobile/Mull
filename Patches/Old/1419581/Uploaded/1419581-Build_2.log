@@ -1,0 +1,19 @@
+ 0:26.54 :app:generateOfficialPhotonDebugSources UP-TO-DATE
+ 0:27.13 :app:compileOfficialPhotonDebugJavaWithJavac/home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java:27: error: package org.mozilla.gecko.push does not exist
+ 0:27.13 import org.mozilla.gecko.push.PushManager;
+ 0:27.13                              ^
+ 0:27.48 /home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java:76: error: cannot find symbol
+ 0:27.48         mmaHelper.setGcmSenderId(PushManager.getSenderIds());
+ 0:27.48                                  ^
+ 0:27.49   symbol:   variable PushManager
+ 0:27.49   location: class MmaDelegate
+ 0:28.43 /home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java:191: error: cannot find symbol
+ 0:28.43                 .getDrawable(R.drawable.ic_close_light);
+ 0:28.43                                        ^
+ 0:28.43   symbol:   variable ic_close_light
+ 0:28.43   location: class drawable
+ 0:29.15 Note: Some input files use or override a deprecated API.
+ 0:29.15 Note: Recompile with -Xlint:deprecation for details.
+ 0:29.15 3 errors
+ 0:29.16  FAILED
+

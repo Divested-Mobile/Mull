@@ -1,0 +1,20 @@
+Lets start?
+
+The builds below have the above patch (8930711) applied.
+
+Build [1] here is built with just "MOZ_NATIVE_DEVICES=", it fails.
+RemotePresentationService.java and PresentationMediaPlayerManager.java are properly specified in base/moz.build.
+However they are not excluded in app/build.gradle, so it still gets included.
+
+Build [2] here is built with the following and it fails:
+MOZ_ANDROID_GCM=
+MOZ_NATIVE_DEVICES=
+MOZ_INSTALL_TRACKING=
+MOZ_ANDROID_MMA=
+
+MmaDelegate.java appears to be deeply tied into various components and cannot be easily removed, but it should not need to be removed as there is MmaStubImp.java.
+The issue is that Push is in MmaDelegate, where as it should be instead handled in MmaLeanplumImp.java.
+The offending line 76 "mmaHelper.setGcmSenderId(PushManager.getSenderIds());" can be moved into MmaLeanplumImp.java.
+
+Build [3] has the same config as build [2], it fails.
+The issue is a missing drawable, I think this is an unreleated issue.

@@ -1,0 +1,30 @@
+From e7573a5f887d9f6270a39de5360872c60475bdbb Mon Sep 17 00:00:00 2001
+From: Tad <tad@spotco.us>
+Date: Mon, 18 Dec 2017 19:27:04 -0500
+Subject: [PATCH] DNM: Android: Fix useragent when resist fingerpringting is
+ enable
+
+---
+ toolkit/components/resistfingerprinting/nsRFPService.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/toolkit/components/resistfingerprinting/nsRFPService.h b/toolkit/components/resistfingerprinting/nsRFPService.h
+index 0299eee95e08..2d21bd384a07 100644
+--- a/toolkit/components/resistfingerprinting/nsRFPService.h
++++ b/toolkit/components/resistfingerprinting/nsRFPService.h
+@@ -14,9 +14,9 @@
+ // Defines regarding spoofed values of Navigator object. These spoofed values
+ // are returned when 'privacy.resistFingerprinting' is true.
+ #define SPOOFED_APPNAME    "Netscape"
+-#define SPOOFED_APPVERSION "5.0 (Windows)"
+-#define SPOOFED_OSCPU      "Windows NT 6.1; Win64; x64"
+-#define SPOOFED_PLATFORM   "Win64"
++#define SPOOFED_APPVERSION "5.0"
++#define SPOOFED_OSCPU      "Android; Mobile"
++#define SPOOFED_PLATFORM   "Linux armv8l"
+ 
+ #define LEGACY_BUILD_ID    "20100101"
+ 
+-- 
+2.14.1
+

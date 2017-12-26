@@ -1,0 +1,11 @@
+ 1:54.44 :app:generateOfficialPhotonDebugSources
+ 1:57.32 :app:compileOfficialPhotonDebugJavaWithJavac/home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/PresentationMediaPlayerManager.java:12: error: package android.support.v7.media does not exist
+ 1:57.32 import android.support.v7.media.MediaRouter;
+ 1:57.32                                ^
+ 1:57.32 /home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/PresentationMediaPlayerManager.java:29: error: cannot find symbol
+ 1:57.32 public class PresentationMediaPlayerManager extends MediaPlayerManager {
+ 1:57.32                                                     ^
+ 1:57.32   symbol: class MediaPlayerManager
+ 1:57.51 /home/user/mozilla-central/mobile/android/base/java/org/mozilla/gecko/RemotePresentationService.java:14: error: package com.google.android.gms.cast does not exist
+ 1:57.51 import com.google.android.gms.cast.CastMediaControlIntent;
+ 1:57.51                                   ^

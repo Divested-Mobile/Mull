@@ -1,0 +1,55 @@
+From ea6bfa91b1403d803b16015b41cb03d4ff14904f Mon Sep 17 00:00:00 2001
+From: Tad <tad@spotco.us>
+Date: Thu, 30 Nov 2017 16:06:08 -0500
+Subject: [PATCH] Bug 1419581, DNM: Move MMA setGcmSenderID from MmaDelegate to
+ MmaLeanplumImp
+
+---
+ mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java    | 2 --
+ mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java b/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
+index ec69e7d5a726..446b43b4d34b 100644
+--- a/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
++++ b/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
+@@ -25,7 +25,6 @@ import org.mozilla.gecko.Tab;
+ import org.mozilla.gecko.Tabs;
+ import org.mozilla.gecko.fxa.FirefoxAccounts;
+ import org.mozilla.gecko.preferences.GeckoPreferences;
+-import org.mozilla.gecko.push.PushManager;
+ import org.mozilla.gecko.switchboard.SwitchBoard;
+ import org.mozilla.gecko.util.ContextUtils;
+ 
+@@ -74,7 +73,6 @@ public class MmaDelegate {
+         // we gather the information here then pass to mmaHelper.init()
+         // Note that generateUserAttribute always return a non null HashMap.
+         final Map<String, Object> attributes = gatherUserAttributes(activity);
+-        mmaHelper.setGcmSenderId(PushManager.getSenderIds());
+         final String deviceId = getDeviceId(activity);
+         mmaHelper.setDeviceId(deviceId);
+         PrefsHelper.setPref(GeckoPreferences.PREFS_MMA_DEVICE_ID, deviceId);
+diff --git a/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java b/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
+index b7943f0bc528..e17d5b6f7ac5 100644
+--- a/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
++++ b/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
+@@ -23,6 +23,7 @@ import com.leanplum.internal.Constants;
+ 
+ import org.mozilla.gecko.AppConstants;
+ import org.mozilla.gecko.MmaConstants;
++import org.mozilla.gecko.push.PushManager;
+ 
+ import java.util.Map;
+ import java.util.UUID;
+@@ -46,6 +47,8 @@ public class MmaLeanplumImp implements MmaInterface {
+             Leanplum.setAppIdForDevelopmentMode(MmaConstants.MOZ_LEANPLUM_SDK_CLIENTID, MmaConstants.MOZ_LEANPLUM_SDK_KEY);
+         }
+ 
++        this.setGcmSenderId(PushManager.getSenderIds());
++
+         if (attributes != null) {
+             Leanplum.start(activity, attributes);
+         } else {
+-- 
+2.14.1
+

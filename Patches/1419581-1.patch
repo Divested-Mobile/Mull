@@ -1,0 +1,32 @@
+diff --git a/mobile/android/moz.configure b/mobile/android/moz.configure
+--- a/mobile/android/moz.configure
++++ b/mobile/android/moz.configure
+@@ -3,20 +3,24 @@
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
+ project_flag('MOZ_ANDROID_EXCLUDE_FONTS',
+              help='Whether to exclude font files from the build',
+              default=True)
+ 
+-project_flag('MOZ_ANDROID_GCM',
+-             help='Enable GCM (Google Cloud Messaging) registration',
+-             default=True,
+-             set_for_old_configure=True)
++option(env='MOZ_ANDROID_GCM',
++       help='Enable GCM (Google Cloud Messaging) registration',
++       default=True)
++
++set_config('MOZ_ANDROID_GCM',
++           depends_if('MOZ_ANDROID_GCM')(lambda _: True))
++add_old_configure_assignment('MOZ_ANDROID_GCM',
++                             depends_if('MOZ_ANDROID_GCM')(lambda _: True))
+ 
+ option(env='MOZ_NATIVE_DEVICES',
+        help='Enable second screen support using native Android libraries.',
+        default=True)
+ 
+ set_config('MOZ_NATIVE_DEVICES',
+            depends_if('MOZ_NATIVE_DEVICES')(lambda _: True))
+ add_old_configure_assignment('MOZ_NATIVE_DEVICES',

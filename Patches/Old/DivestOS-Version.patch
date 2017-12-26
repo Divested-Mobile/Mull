@@ -1,0 +1,28 @@
+From 1f6ef567703c3d4a87facde7dff225847417533e Mon Sep 17 00:00:00 2001
+From: Tad <tad@spotco.us>
+Date: Thu, 30 Nov 2017 16:19:57 -0500
+Subject: [PATCH] No bug, DNM: Fennec-DOS version
+
+---
+ mobile/android/branding/unofficial/configure.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/mobile/android/branding/unofficial/configure.sh b/mobile/android/branding/unofficial/configure.sh
+index 87ebeeb0e2d2..2de15f03dc78 100644
+--- a/mobile/android/branding/unofficial/configure.sh
++++ b/mobile/android/branding/unofficial/configure.sh
+@@ -2,8 +2,9 @@
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
+-ANDROID_PACKAGE_NAME=org.mozilla.fennec_`echo $USER | sed 's/-/_/g'`
+-MOZ_APP_DISPLAYNAME="Fennec `echo $USER | sed 's/-/_/g'`"
++ANDROID_PACKAGE_NAME=us.spotco.fennec_dos
++MOZ_APP_DISPLAYNAME="Fennec DOS"
++MOZ_APP_ANDROID_VERSION_CODE=590007
+ MOZ_UPDATER=
+ MOZ_ANDROID_ANR_REPORTER=
+ MOZ_ANDROID_GCM_SENDERID=965234145045
+-- 
+2.14.1
+

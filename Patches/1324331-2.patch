@@ -1,0 +1,20 @@
+# HG changeset patch
+# User Matías Zúñiga <matias.nicolas.zc@gmail.com>
+# Date 1502262718 14400
+#      Wed Aug 09 03:11:58 2017 -0400
+# Node ID 7edde6adbbe2c065af0fd12fbfef24e0cf523cca
+# Parent  b05ae4442ad962b57b8377a462cc663632925e5f
+Bug 1324331 - Add missing excludes when building without MOZ_NATIVE_DEVICES.
+
+diff -r b05ae4442ad9 -r 7edde6adbbe2 mobile/android/app/build.gradle
+--- a/mobile/android/app/build.gradle	Tue Aug 08 16:50:00 2017 -0400
++++ b/mobile/android/app/build.gradle	Wed Aug 09 03:11:58 2017 -0400
+@@ -145,6 +145,8 @@
+                     exclude 'org/mozilla/gecko/GeckoMediaPlayer.java'
+                     exclude 'org/mozilla/gecko/GeckoPresentationDisplay.java'
+                     exclude 'org/mozilla/gecko/MediaPlayerManager.java'
++                    exclude 'org/mozilla/gecko/PresentationMediaPlayerManager.java'
++                    exclude 'org/mozilla/gecko/RemotePresentationService.java'
+                 }
+ 
+                 if (mozconfig.substs.MOZ_INSTALL_TRACKING) {

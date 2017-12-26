@@ -1,0 +1,213 @@
+# HG changeset patch
+# User Tad <tad@spotco.us>
+# Date 1511438759 18000
+#      Thu Nov 23 07:05:59 2017 -0500
+# Node ID 268273e719f43bffbb022829b8e09e29c4842711
+# Parent  b6bed1b710c3e22cab49f22f1b5f44d80286bcb9
+Many fixes for #1419581
+
+diff --git a/mobile/android/app/build.gradle b/mobile/android/app/build.gradle
+--- a/mobile/android/app/build.gradle
++++ b/mobile/android/app/build.gradle
+@@ -138,6 +138,8 @@ android {
+                     exclude 'org/mozilla/gecko/GeckoMediaPlayer.java'
+                     exclude 'org/mozilla/gecko/GeckoPresentationDisplay.java'
+                     exclude 'org/mozilla/gecko/MediaPlayerManager.java'
++                    exclude 'org/mozilla/gecko/PresentationMediaPlayerManager.java'
++                    exclude 'org/mozilla/gecko/RemotePresentationService.java'
+                 }
+ 
+                 if (mozconfig.substs.MOZ_INSTALL_TRACKING) {
+diff --git a/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java b/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java
+--- a/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java
++++ b/mobile/android/base/java/org/mozilla/gecko/customtabs/ActionBarPresenter.java
+@@ -188,7 +188,7 @@ public class ActionBarPresenter {
+         @SuppressWarnings("deprecation")
+         final Drawable icon = mActionBar.getThemedContext()
+                 .getResources()
+-                .getDrawable(R.drawable.ic_close_light);
++                .getDrawable(R.drawable.tab_item_close_button);
+ 
+         Drawable wrapped = DrawableCompat.wrap(icon);
+         DrawableCompat.setTint(wrapped, mTextPrimaryColor);
+diff --git a/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java b/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
+--- a/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
++++ b/mobile/android/base/java/org/mozilla/gecko/mma/MmaDelegate.java
+@@ -24,7 +24,6 @@ import org.mozilla.gecko.Tab;
+ import org.mozilla.gecko.Tabs;
+ import org.mozilla.gecko.fxa.FirefoxAccounts;
+ import org.mozilla.gecko.preferences.GeckoPreferences;
+-import org.mozilla.gecko.push.PushManager;
+ import org.mozilla.gecko.switchboard.SwitchBoard;
+ import org.mozilla.gecko.util.ContextUtils;
+ 
+@@ -73,7 +72,6 @@ public class MmaDelegate {
+         // we gather the information here then pass to mmaHelper.init()
+         // Note that generateUserAttribute always return a non null HashMap.
+         final Map<String, Object> attributes = gatherUserAttributes(activity);
+-        mmaHelper.setGcmSenderId(PushManager.getSenderIds());
+         mmaHelper.setDeviceId(getDeviceId(activity));
+         // above two config setup required to be invoked before mmaHelper.init.
+         mmaHelper.init(activity, attributes);
+diff --git a/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java b/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
+--- a/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
++++ b/mobile/android/base/java/org/mozilla/gecko/mma/MmaLeanplumImp.java
+@@ -23,6 +23,7 @@ import com.leanplum.internal.Constants;
+ 
+ import org.mozilla.gecko.AppConstants;
+ import org.mozilla.gecko.MmaConstants;
++import org.mozilla.gecko.push.PushManager;
+ 
+ import java.util.Map;
+ import java.util.UUID;
+@@ -46,6 +47,8 @@ public class MmaLeanplumImp implements M
+             Leanplum.setAppIdForDevelopmentMode(MmaConstants.MOZ_LEANPLUM_SDK_CLIENTID, MmaConstants.MOZ_LEANPLUM_SDK_KEY);
+         }
+ 
++        this.setGcmSenderId(PushManager.getSenderIds());
++
+         if (attributes != null) {
+             Leanplum.start(activity, attributes);
+         } else {
+diff --git a/mobile/android/config/proguard/proguard.cfg b/mobile/android/config/proguard/proguard.cfg
+--- a/mobile/android/config/proguard/proguard.cfg
++++ b/mobile/android/config/proguard/proguard.cfg
+@@ -159,6 +159,9 @@
+ # Suppress warnings about missing descriptor classes.
+ #-dontnote **,!ch.boye.**,!org.mozilla.gecko.sync.**
+ 
++# Don't print errors of missing GMS when building without
++-dontwarn com.google.android.gms.**
++
+ -include "play-services-keeps.cfg"
+ 
+ # Don't print spurious warnings from the support library.
+diff --git a/widget/android/fennec/FennecJNINatives.h b/widget/android/fennec/FennecJNINatives.h
+--- a/widget/android/fennec/FennecJNINatives.h
++++ b/widget/android/fennec/FennecJNINatives.h
+@@ -83,6 +83,7 @@ const JNINativeMethod MemoryMonitor::Nat
+             ::template Wrap<&Impl::DispatchMemoryPressure>)
+ };
+ 
++#ifdef MOZ_NATIVE_DEVICES
+ template<class Impl>
+ class PresentationMediaPlayerManager::Natives : public mozilla::jni::NativeImpl<PresentationMediaPlayerManager, Impl>
+ {
+@@ -105,6 +106,7 @@ const JNINativeMethod PresentationMediaP
+             mozilla::jni::NativeStub<PresentationMediaPlayerManager::RemovePresentationSurface_t, Impl>
+             ::template Wrap<&Impl::RemovePresentationSurface>)
+ };
++#endif
+ 
+ template<class Impl>
+ class Telemetry::Natives : public mozilla::jni::NativeImpl<Telemetry, Impl>
+diff --git a/widget/android/fennec/FennecJNIWrappers.cpp b/widget/android/fennec/FennecJNIWrappers.cpp
+--- a/widget/android/fennec/FennecJNIWrappers.cpp
++++ b/widget/android/fennec/FennecJNIWrappers.cpp
+@@ -174,6 +174,7 @@ const char MemoryMonitor::name[] =
+ constexpr char MemoryMonitor::DispatchMemoryPressure_t::name[];
+ constexpr char MemoryMonitor::DispatchMemoryPressure_t::signature[];
+ 
++#ifdef MOZ_NATIVE_DEVICES
+ const char PresentationMediaPlayerManager::name[] =
+         "org/mozilla/gecko/PresentationMediaPlayerManager";
+ 
+@@ -185,6 +186,7 @@ constexpr char PresentationMediaPlayerMa
+ 
+ constexpr char PresentationMediaPlayerManager::RemovePresentationSurface_t::name[];
+ constexpr char PresentationMediaPlayerManager::RemovePresentationSurface_t::signature[];
++#endif
+ 
+ const char Telemetry::name[] =
+         "org/mozilla/gecko/Telemetry";
+diff --git a/widget/android/fennec/FennecJNIWrappers.h b/widget/android/fennec/FennecJNIWrappers.h
+--- a/widget/android/fennec/FennecJNIWrappers.h
++++ b/widget/android/fennec/FennecJNIWrappers.h
+@@ -518,6 +518,7 @@ public:
+     template<class Impl> class Natives;
+ };
+ 
++#ifdef MOZ_NATIVE_DEVICES
+ class PresentationMediaPlayerManager : public mozilla::jni::ObjectBase<PresentationMediaPlayerManager>
+ {
+ public:
+@@ -584,6 +585,7 @@ public:
+ 
+     template<class Impl> class Natives;
+ };
++#endif
+ 
+ class Telemetry : public mozilla::jni::ObjectBase<Telemetry>
+ {
+diff --git a/widget/android/nsWindow.cpp b/widget/android/nsWindow.cpp
+--- a/widget/android/nsWindow.cpp
++++ b/widget/android/nsWindow.cpp
+@@ -1156,6 +1156,7 @@ public:
+     }
+ };
+ 
++#ifdef MOZ_NATIVE_DEVICES
+ template<> const char
+ nsWindow::NativePtr<nsWindow::LayerViewSupport>::sName[] = "LayerViewSupport";
+ 
+@@ -1243,7 +1244,7 @@ public:
+ 
+ ANativeWindow* nsWindow::PMPMSupport::sWindow;
+ EGLSurface nsWindow::PMPMSupport::sSurface;
+-
++#endif
+ 
+ nsWindow::GeckoViewSupport::~GeckoViewSupport()
+ {
+@@ -1399,9 +1400,11 @@ nsWindow::InitNatives()
+     nsWindow::GeckoViewSupport::Base::Init();
+     nsWindow::LayerViewSupport::Init();
+     nsWindow::NPZCSupport::Init();
++#ifdef MOZ_NATIVE_DEVICES
+     if (jni::IsFennec()) {
+         nsWindow::PMPMSupport::Init();
+     }
++#endif
+ }
+ 
+ nsWindow*
+@@ -2049,11 +2052,13 @@ nsWindow::GetNativeData(uint32_t aDataTy
+             }
+             return nullptr;
+ 
++#ifdef MOZ_NATIVE_DEVICES
+         case NS_PRESENTATION_WINDOW:
+             return PMPMSupport::sWindow;
+ 
+         case NS_PRESENTATION_SURFACE:
+             return PMPMSupport::sSurface;
++#endif
+     }
+ 
+     return nullptr;
+@@ -2063,9 +2068,11 @@ void
+ nsWindow::SetNativeData(uint32_t aDataType, uintptr_t aVal)
+ {
+     switch (aDataType) {
++#ifdef MOZ_NATIVE_DEVICES
+         case NS_PRESENTATION_SURFACE:
+             PMPMSupport::sSurface = reinterpret_cast<EGLSurface>(aVal);
+             break;
++#endif
+     }
+ }
+ 
+diff --git a/widget/android/nsWindow.h b/widget/android/nsWindow.h
+--- a/widget/android/nsWindow.h
++++ b/widget/android/nsWindow.h
+@@ -193,8 +193,10 @@ private:
+     // keep it last in the list, so its destructor is called first.
+     mozilla::UniquePtr<GeckoViewSupport> mGeckoViewSupport;
+ 
++#ifdef MOZ_NATIVE_DEVICES
+     // Class that implements native PresentationMediaPlayerManager calls.
+     class PMPMSupport;
++#endif
+ 
+     mozilla::Atomic<bool, mozilla::ReleaseAcquire> mContentDocumentDisplayed;
+ 

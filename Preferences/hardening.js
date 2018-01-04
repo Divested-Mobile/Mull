@@ -1144,4 +1144,5 @@ pref("plugin.expose_full_path", false);
 pref("browser.link.open_newwindow_restriction", true);
 pref("reader.parse-on-load.enabled", false);
 pref("browser.reader.detectedFirstArticle", true);
+pref("javascript.options.shared_memory", false);
 //END OF BRACE EXTRAS

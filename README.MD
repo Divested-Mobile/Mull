@@ -5,6 +5,7 @@ Overview
 --------
 Fennec DOS is basically Orfox (Android Tor Browser), but without routing over Tor network.
 It enables many features upstreamed by the Tor Uplift project through @pyllyukko's user.js project.
+It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
 
 Faster builds
 -------------

@@ -21,6 +21,7 @@ ac_add_options --enable-elf-hack
 ac_add_options --enable-strip
 ac_add_options --enable-release
 ac_add_options --enable-hardening
+ac_add_options --without-google-play-services
 
 export BUILD_OFFICIAL=1
 export MOZILLA_OFFICIAL=1
@@ -31,8 +32,9 @@ mk_add_options BUILD_OFFICIAL=1
 mk_add_options NIGHTLY_BUILD=
 mk_add_options MOZ_DEBUG=
 
-MOZ_ANDROID_GCM=
+MOZ_ANDROID_GOOGLE_PLAY_SERVICES=
 MOZ_NATIVE_DEVICES=
-MOZ_INSTALL_TRACKING=
+MOZ_ANDROID_GCM=
 MOZ_ANDROID_MMA=
+MOZ_INSTALL_TRACKING=
 MOZ_ANDROID_POCKET=

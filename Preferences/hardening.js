@@ -218,7 +218,7 @@ pref("browser.search.geoip.url",				"");
 
 // PREF: Set Accept-Language HTTP header to en-US regardless of Firefox localization
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language
-pref("intl.accept_languages",				"en-US, en");
+pref("intl.accept_languages",				"en-US");
 
 // PREF: Don't use OS values to determine locale, force using Firefox locale setting
 // http://kb.mozillazine.org/Intl.locale.matchOS
@@ -323,7 +323,7 @@ pref("browser.startup.homepage_override.buildID",		"20100101");
 // PREF: Prevent font fingerprinting
 // https://browserleaks.com/fonts
 // https://github.com/pyllyukko/user.js/issues/120
-pref("browser.display.use_document_fonts",			0);
+//BRACE-DISABLED: pref("browser.display.use_document_fonts",			0);
 
 // PREF: Enable only whitelisted URL protocol handlers
 // http://kb.mozillazine.org/Network.protocol-handler.external-default
@@ -788,6 +788,10 @@ pref("browser.formfill.enable",				false);
 // https://www.torproject.org/projects/torbrowser/design/#identifier-linkability
 pref("signon.autofillForms",				false);
 
+// PREF: Disable formless login capture
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1166947
+pref("signon.formlessCapture.enabled",			false);
+
 // PREF: When username/password autofill is enabled, still disable it on non-HTTPS sites
 // https://hg.mozilla.org/integration/mozilla-inbound/rev/f0d146fe7317
 pref("signon.autofillForms.http",				false);
@@ -1129,6 +1133,7 @@ pref("layers.acceleration.force-enabled", true);
 pref("media.hardware-video-decoding.force-enabled", true);
 pref("browser.tabs.remote.autostart", true);
 pref("browser.tabs.remote.force-enabled", true);
+pref("layers.omtp.enabled", true);
 pref("privacy.firstparty.isolate", true);
 pref("privacy.firstparty.isolate.restrict_opener_access", false);
 pref("extensions.screenshots.disabled", true);

@@ -643,6 +643,10 @@ pref("browser.aboutHomeSnippets.updateUrl",		"");
 // https://support.mozilla.org/en-US/kb/how-stop-firefox-making-automatic-connections#w_auto-update-checking
 pref("browser.search.update",				false);
 
+// PREF: Disable automatic captive portal detection (Firefox >= 52.0)
+// https://support.mozilla.org/en-US/questions/1157121
+pref("network.captive-portal-service.enabled",		false);
+
 /******************************************************************************
  * SECTION: HTTP                                                              *
  ******************************************************************************/
@@ -1014,7 +1018,7 @@ pref("security.ssl.treat_unsafe_negotiation_as_broken",	true);
 // https://wiki.mozilla.org/Security:Renegotiation#security.ssl.require_safe_negotiation
 // https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-3555
 // TODO: `security.ssl.require_safe_negotiation` is more secure but makes browsing next to impossible (2012-2014-... - `ssl_error_unsafe_negotiation` errors), so is left disabled
-pref("security.ssl.require_safe_negotiation",		true);
+//pref("security.ssl.require_safe_negotiation",		true);
 
 // PREF: Disable automatic reporting of TLS connection errors
 // https://support.mozilla.org/en-US/kb/certificate-pinning-reports
@@ -1128,6 +1132,8 @@ pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 
 
 //START OF BRACE EXTRAS
+pref("browser.tabs.drawInTitlebar", true);
+pref("widget.allow-client-side-decoration", true);
 pref("general.smoothScroll", false);
 pref("layers.acceleration.force-enabled", true);
 pref("media.hardware-video-decoding.force-enabled", true);

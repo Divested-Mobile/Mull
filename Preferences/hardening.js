@@ -1,3 +1,4 @@
+//
 /******************************************************************************
  * user.js                                                                    *
  * https://github.com/pyllyukko/user.js                                       *
@@ -23,7 +24,7 @@
 //BRACE-DISABLED: pref("dom.workers.enabled",					false);
 
 // PREF: Disable web notifications
-// https://support.mozilla.org/t5/Firefox/I-can-t-find-Firefox-menu-I-m-trying-to-opt-out-of-Web-Push-and/m-p/1317495#M1006501
+// https://support.mozilla.org/en-US/questions/1140439
 pref("dom.webnotifications.enabled",			false);
 
 // PREF: Disable DOM timing API
@@ -218,7 +219,7 @@ pref("browser.search.geoip.url",				"");
 
 // PREF: Set Accept-Language HTTP header to en-US regardless of Firefox localization
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language
-pref("intl.accept_languages",				"en-US");
+pref("intl.accept_languages",				"data:text/plain,intl.accept_languages=en-US, en");
 
 // PREF: Don't use OS values to determine locale, force using Firefox locale setting
 // http://kb.mozillazine.org/Intl.locale.matchOS
@@ -698,6 +699,12 @@ pref("network.http.referer.spoofSource",			true);
 // CIS 2.5.1
 pref("network.cookie.cookieBehavior",			1);
 
+// PREF: Enable first-party isolation
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1299996
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1260931
+// https://wiki.mozilla.org/Security/FirstPartyIsolation
+pref("privacy.firstparty.isolate",				true);
+
 // PREF: Make sure that third-party cookies (if enabled) never persist beyond the session.
 // https://feeding.cloud.geek.nz/posts/tweaking-cookies-for-privacy-in-firefox/
 // http://kb.mozillazine.org/Network.cookie.thirdparty.sessionOnly
@@ -1155,5 +1162,6 @@ pref("plugin.expose_full_path", false);
 pref("browser.link.open_newwindow_restriction", true);
 pref("reader.parse-on-load.enabled", false);
 pref("browser.reader.detectedFirstArticle", true);
+pref("network.negotiate-auth.trusted-uris", "");
 pref("javascript.options.shared_memory", false);
 //END OF BRACE EXTRAS

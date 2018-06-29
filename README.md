@@ -26,12 +26,12 @@ Basic steps to build Fennec DOS (first build)
 - cp ../FennecDOS-Build/MOZCONFIG .mozconfig
 - nano .mozconfig #Update paths
 - ./mach build && ./mach package
-An apk will be outputted in to obj-arm-linux-androideabi/dist/
+An apk will be outputted into obj-arm-linux-androideabi/dist/
 
 Basic steps to clean workspace and build (future builds)
 --------------------------------------------------------
 - git add -A && git reset --hard
-- git checkout master
+- git checkout release
 - git pull
 - git checkout divestos
 - git rebase master
@@ -39,4 +39,4 @@ Basic steps to clean workspace and build (future builds)
 - cp -r ../FennecDOS-Build/Branding/divestos mobile/android/branding/
 - rm -rf obj-arm-linux-androideabi
 - ./mach build && ./mach package
-An apk will be outputted in to obj-arm-linux-androideabi/dist/
+An apk will be outputted into obj-arm-linux-androideabi/dist/

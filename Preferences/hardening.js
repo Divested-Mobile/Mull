@@ -1141,6 +1141,7 @@ pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 //START OF BRACE EXTRAS
 pref("browser.tabs.drawInTitlebar", true);
 pref("widget.allow-client-side-decoration", true);
+pref("mailnews.start_page.enabled", false);
 pref("general.smoothScroll", false);
 pref("layers.acceleration.force-enabled", true);
 pref("media.hardware-video-decoding.force-enabled", true);
@@ -1163,5 +1164,9 @@ pref("browser.link.open_newwindow_restriction", true);
 pref("reader.parse-on-load.enabled", false);
 pref("browser.reader.detectedFirstArticle", true);
 pref("network.negotiate-auth.trusted-uris", "");
+pref("messenger.status.reportIdle", false);
 pref("javascript.options.shared_memory", false);
+pref("security.webauth.u2f", true);
+pref("mailnews.message_display.disable_remote_image", true);
+pref("mail.phishing.detection.enabled", true);
 //END OF BRACE EXTRAS

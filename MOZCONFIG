@@ -5,8 +5,6 @@
 # Build for Android
 ac_add_options --enable-application=mobile/android
 ac_add_options --target=arm-linux-androideabi
-#ac_add_options --with-android-min-sdk=21
-#ac_add_options --target=aarch64-linux-android
 
 # Specify paths
 ac_add_options --with-android-sdk="/home/emy/.mozbuild/android-sdk-linux"
@@ -18,6 +16,7 @@ ac_add_options --with-branding=mobile/android/branding/divestos
 mk_add_options MOZ_APP_DISPLAYNAME="Fennec DOS"
 
 # Build tweaks
+ac_add_options --enable-bundled-fonts
 ac_add_options --disable-tests
 mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_MAKE_FLAGS="-j20"
@@ -28,6 +27,8 @@ ac_add_options --without-google-play-services
 unset MOZ_ANDROID_MMA
 unset MOZ_ANDROID_POCKET
 unset MOZ_INSTALL_TRACKING
+unset MOZ_DATA_REPORTING
+unset MOZ_TELEMETRY_REPORTING
 unset MOZ_SERVICES_HEALTHREPORT
 
 # Disable unneeded extras
@@ -35,16 +36,11 @@ ac_add_options --disable-webrtc
 ac_add_options --disable-updater
 ac_add_options --disable-crashreporter
 unset MOZ_SWITCHBOARD
-unset MOZ_SERVICES_SYNC
 unset MOZ_ANDROID_MLS_STUMBLER
 
 # Hardening
 ac_add_options --enable-pie
 ac_add_options --enable-hardening
-ac_add_options --enable-signmar
-ac_add_options --enable-verify-mar
-export MOZ_REQUIRE_SIGNING=1
-unset MOZ_ALLOW_LEGACY_EXTENSIONS
 
 # Optimize
 ac_add_options --disable-debug

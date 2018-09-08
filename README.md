@@ -3,7 +3,7 @@ Fennec DOS
 
 Overview
 --------
-Fennec DOS is basically Orfox (Android Tor Browser), but without routing over Tor network.
+Fennec DOS is basically Orfox (Tor Browser Android), but without routing over Tor network and upstream Firefox (instead of a modified ESR).
 It enables many features upstreamed by the Tor Uplift project through @pyllyukko's user.js project.
 It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
 
@@ -40,3 +40,10 @@ Basic steps to clean workspace and build (future builds)
 - rm -rf obj-arm-linux-androideabi
 - ./mach build && ./mach package
 An apk will be outputted into obj-arm-linux-androideabi/dist/
+
+TODO
+----
+- Default Settings
+- Default Search
+- Default top sites
+- Further pilfer patches from Tor Browser Android

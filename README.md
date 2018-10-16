@@ -12,11 +12,17 @@ Faster builds
 Use of ccache is extremely recomended as it will greatly speedup future builds.
 Read [here](https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/ccache)
 
+Choose a base
+-------------
+- Choices: master (nightly), release (stable), esr60 (lts)
+- $ export bbase="esr60";
+
 Basic steps to build Fennec DOS (first build)
 ---------------------------------------------
 - mkdir FennecDOS && cd FennecDOS
 - git clone |THIS REPO| FennecDOS-Build
 - git clone https://github.com/mozilla/gecko-dev.git Firefox
+- git checkout $bbase
 - cd Firefox
 - git checkout -b divestos
 - ./mach bootstrap #Choose Android non-artifact
@@ -31,10 +37,10 @@ An apk will be outputted into obj-arm-linux-androideabi/dist/
 Basic steps to clean workspace and build (future builds)
 --------------------------------------------------------
 - git add -A && git reset --hard
-- git checkout release
+- git checkout $bbase
 - git pull
 - git checkout divestos
-- git rebase master
+- git rebase $bbase
 - cat ../FennecDOS-Build/Preferences/hardening.js >> mobile/android/app/mobile.js
 - cp -r ../FennecDOS-Build/Branding/divestos mobile/android/branding/
 - rm -rf obj-arm-linux-androideabi

@@ -20,7 +20,7 @@
 // PREF: Disable Web Workers
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
 // https://www.w3schools.com/html/html5_webworkers.asp
-// NOTICE: Disabling Web Workers breaks "Download as ZIP" functionality on https://mega.nz/, WhatsApp Web and probably others
+// NOTICE: Disabling Web Workers breaks "Download as ZIP" functionality on https://mega.nz/, WhatsApp Web, upload on https://www.virustotal.com/,  and probably others
 //BRACE-DISABLED: pref("dom.workers.enabled",					false);
 
 // PREF: Disable web notifications
@@ -197,18 +197,15 @@ pref("webgl.enable-debug-renderer-info",			false);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1360039
 pref("dom.maxHardwareConcurrency",				2);
 
+// PREF: Disable WebAssembly
+pref("javascript.options.wasm",				false);
+
 /******************************************************************************
  * SECTION: Misc                                                              *
  ******************************************************************************/
 
 // PREF: Disable face detection
 pref("camera.control.face_detection.enabled",		false);
-
-// PREF: Set the default search engine to DuckDuckGo (disabled)
-// https://support.mozilla.org/en-US/questions/948134
-//pref("browser.search.defaultenginename",		"DuckDuckGo");
-//pref("browser.search.order.1",				"DuckDuckGo");
-//pref("keyword.URL", 							"https://duckduckgo.com/html/?q=!+");  
 
 // PREF: Disable GeoIP lookup on your address to set default search engine region
 // https://trac.torproject.org/projects/tor/ticket/16254
@@ -591,6 +588,12 @@ pref("browser.newtabpage.activity-stream.feeds.section.topstories",	false);
  * SECTION: Automatic connections                                             *
  ******************************************************************************/
 
+// PREF: Limit the connection keep-alive timeout to 15 seconds (disabled)
+// https://github.com/pyllyukko/user.js/issues/387
+// http://kb.mozillazine.org/Network.http.keep-alive.timeout
+// https://httpd.apache.org/docs/current/mod/core.html#keepalivetimeout
+//pref("network.http.keep-alive.timeout",			15);
+
 // PREF: Disable prefetching of <link rel="next"> URLs
 // http://kb.mozillazine.org/Network.prefetch-next
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ#Is_there_a_preference_to_disable_link_prefetching.3F
@@ -901,7 +904,6 @@ pref("browser.newtabpage.directory.source",		"data:text/plain,{}");
 // https://hg.mozilla.org/mozilla-central/rev/304560
 pref("plugins.update.notifyUser",				true);
 
-
 // PREF: Force Punycode for Internationalized Domain Names
 // http://kb.mozillazine.org/Network.IDN_show_punycode
 // https://www.xudongz.com/blog/2017/idn-phishing/
@@ -1148,6 +1150,8 @@ pref("media.hardware-video-decoding.force-enabled", true);
 pref("browser.tabs.remote.autostart", true);
 pref("browser.tabs.remote.force-enabled", true);
 pref("layers.omtp.enabled", true);
+pref("gfx.webrenderer.enabled", true);
+pref("extensions.webextensions.remote", true);
 pref("privacy.firstparty.isolate", true);
 pref("privacy.firstparty.isolate.restrict_opener_access", false);
 pref("extensions.screenshots.disabled", true);
@@ -1165,6 +1169,9 @@ pref("reader.parse-on-load.enabled", false);
 pref("browser.reader.detectedFirstArticle", true);
 pref("network.negotiate-auth.trusted-uris", "");
 pref("messenger.status.reportIdle", false);
+pref("extensions.enigmail.autoWkdLookup", 0);
+pref("extensions.webcompat-reporter.enabled", false);
+pref("browser.contentblocking.ui.enabled", true);
 pref("javascript.options.shared_memory", false);
 pref("security.webauth.u2f", true);
 pref("mailnews.message_display.disable_remote_image", true);

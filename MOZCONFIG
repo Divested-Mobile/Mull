@@ -9,11 +9,11 @@ ac_add_options --target=arm-linux-androideabi
 # Specify paths
 ac_add_options --with-android-sdk="/home/emy/.mozbuild/android-sdk-linux"
 ac_add_options --with-android-ndk="/home/emy/.mozbuild/android-ndk-r15c"
-ac_add_options --with-ccache=/usr/bin/ccache
+#ac_add_options --with-ccache=/usr/bin/ccache
 
 # Set branding
 ac_add_options --with-branding=mobile/android/branding/divestos
-mk_add_options MOZ_APP_DISPLAYNAME="Fennec DOS"
+mk_add_options MOZ_APP_DISPLAYNAME="Fennec DOS ESR"
 
 # Build tweaks
 ac_add_options --enable-bundled-fonts

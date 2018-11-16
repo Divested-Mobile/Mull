@@ -17,12 +17,6 @@
 // CVE-2016-5259, CVE-2016-2812, CVE-2016-1949, CVE-2016-5287 (fixed)
 //BRACE-DISABLED: pref("dom.serviceWorkers.enabled",				false);
 
-// PREF: Disable Web Workers
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
-// https://www.w3schools.com/html/html5_webworkers.asp
-// NOTICE: Disabling Web Workers breaks "Download as ZIP" functionality on https://mega.nz/, WhatsApp Web, upload on https://www.virustotal.com/,  and probably others
-//BRACE-DISABLED: pref("dom.workers.enabled",					false);
-
 // PREF: Disable web notifications
 // https://support.mozilla.org/en-US/questions/1140439
 pref("dom.webnotifications.enabled",			false);
@@ -198,6 +192,9 @@ pref("webgl.enable-debug-renderer-info",			false);
 pref("dom.maxHardwareConcurrency",				2);
 
 // PREF: Disable WebAssembly
+// https://webassembly.org/
+// https://en.wikipedia.org/wiki/WebAssembly
+// https://trac.torproject.org/projects/tor/ticket/21549
 pref("javascript.options.wasm",				false);
 
 /******************************************************************************
@@ -299,11 +296,11 @@ pref("javascript.options.asmjs",				false);
 // https://github.com/iSECPartners/publications/tree/master/reports/Tor%20Browser%20Bundle
 pref("gfx.font_rendering.opentype_svg.enabled",		false);
 
-// PREF: Disable in-content SVG rendering (Firefox >= 53)
-// NOTICE: Disabling SVG support breaks many UI elements on many sites
+// PREF: Disable in-content SVG rendering (Firefox >= 53) (disabled)
+// NOTICE-DISABLED: Disabling SVG support breaks many UI elements on many sites
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1216893
 // https://github.com/iSECPartners/publications/raw/master/reports/Tor%20Browser%20Bundle/Tor%20Browser%20Bundle%20-%20iSEC%20Deliverable%201.3.pdf#16
-//BRACE-DISABLED: pref("svg.disabled", true);
+////BRACE-DISABLED: pref("svg.disabled", true);
 
 
 // PREF: Disable video stats to reduce fingerprinting threat
@@ -432,6 +429,14 @@ pref("services.blocklist.update_enabled",			true);
 // https://trac.torproject.org/projects/tor/ticket/16931
 pref("extensions.blocklist.url",				"https://blocklist.addons.mozilla.org/blocklist/3/%APP_ID%/%APP_VERSION%/");
 
+// PREF: Disable system add-on updates (hidden & always-enabled add-ons from Mozilla)
+// https://firefox-source-docs.mozilla.org/toolkit/mozapps/extensions/addon-manager/SystemAddons.html
+// https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/
+// https://github.com/pyllyukko/user.js/issues/419
+// https://dxr.mozilla.org/mozilla-central/source/toolkit/mozapps/extensions/AddonManager.jsm#1248-1257
+// NOTICE: Disabling system add-on updates prevents Mozilla from "hotfixing" your browser to patch critical problems (one possible use case from the documentation)
+pref("extensions.systemAddon.update.enabled",		false);
+
 /******************************************************************************
  * SECTION: Firefox (anti-)features / components                              *                            *
  ******************************************************************************/
@@ -459,8 +464,10 @@ pref("devtools.debugger.force-local",			true);
 // https://wiki.mozilla.org/Security/Reviews/Firefox6/ReviewNotes/telemetry
 // https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/manifest.html
 // https://wiki.mozilla.org/Telemetry/Experiments
+// https://support.mozilla.org/en-US/questions/1197144
 pref("toolkit.telemetry.enabled",				false);
 pref("toolkit.telemetry.unified",				false);
+pref("toolkit.telemetry.archive.enabled",			false);
 pref("experiments.supported",				false);
 pref("experiments.enabled",				false);
 pref("experiments.manifest.uri",				"");
@@ -706,6 +713,8 @@ pref("network.cookie.cookieBehavior",			1);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1299996
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1260931
 // https://wiki.mozilla.org/Security/FirstPartyIsolation
+// NOTICE: First-party isolation breaks Microsoft Teams
+// NOTICE: First-party isolation causes HTTP basic auth to ask for credentials for every new tab (see #425)
 pref("privacy.firstparty.isolate",				true);
 
 // PREF: Make sure that third-party cookies (if enabled) never persist beyond the session.
@@ -999,6 +1008,8 @@ pref("security.ssl.disable_session_identifiers",		true);
 // http://kb.mozillazine.org/Security.tls.version.*
 // 1 = TLS 1.0 is the minimum required / maximum supported encryption protocol. (This is the current default for the maximum supported version.)
 // 2 = TLS 1.1 is the minimum required / maximum supported encryption protocol.
+// 3 = TLS 1.2 is the minimum required / maximum supported encryption protocol.
+// 4 = TLS 1.3 is the minimum required / maximum supported encryption protocol.
 pref("security.tls.version.min",				1);
 pref("security.tls.version.max",				4);
 
@@ -1146,7 +1157,7 @@ pref("widget.allow-client-side-decoration", true);
 pref("mailnews.start_page.enabled", false);
 pref("general.smoothScroll", false);
 pref("privacy.firstparty.isolate", true);
-pref("privacy.firstparty.isolate.restrict_opener_access", false);
+pref("privacy.firstparty.isolate.restrict_opener_access", true);
 pref("extensions.screenshots.disabled", true);
 pref("media.eme.enabled", false);
 pref("general.useragent.updates.enabled", false);

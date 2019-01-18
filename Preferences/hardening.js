@@ -1155,6 +1155,7 @@ pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 pref("browser.tabs.drawInTitlebar", true);
 pref("widget.allow-client-side-decoration", true);
 pref("mailnews.start_page.enabled", false);
+pref("browser.ctrlTab.recentlyUsedOrder", false);
 pref("general.smoothScroll", false);
 pref("privacy.firstparty.isolate", true);
 pref("privacy.firstparty.isolate.restrict_opener_access", true);
@@ -1176,6 +1177,7 @@ pref("messenger.status.reportIdle", false);
 pref("extensions.enigmail.autoWkdLookup", 0);
 pref("extensions.webcompat-reporter.enabled", false);
 pref("browser.contentblocking.ui.enabled", true);
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
 pref("javascript.options.shared_memory", false);
 pref("security.webauth.u2f", true);
 pref("mailnews.message_display.disable_remote_image", true);

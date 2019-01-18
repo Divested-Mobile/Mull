@@ -15,7 +15,7 @@ Read [here](https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Bui
 Choose a base
 -------------
 - Choices: master (nightly), release (stable), esr60 (lts)
-- $ export bbase="esr60";
+- $ export bbase="release";
 
 Basic steps to build Fennec DOS (first build)
 ---------------------------------------------
@@ -46,6 +46,12 @@ Basic steps to clean workspace and build (future builds)
 - rm -rf obj-arm-linux-androideabi
 - ./mach build && ./mach package
 An apk will be outputted into obj-arm-linux-androideabi/dist/
+
+NDK r17 arm failure fix
+-----------------------
+See https://bugzilla.mozilla.org/show_bug.cgi?id=1489384
+- sed -i 's/r17b/r15c/' python/mozboot/mozboot/android.py;
+- ./mach bootstrap
 
 TODO
 ----

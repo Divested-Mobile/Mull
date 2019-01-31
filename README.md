@@ -15,7 +15,7 @@ Read [here](https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Bui
 Choose a base
 -------------
 - Choices: master (nightly), release (stable), esr60 (lts)
-- $ export bbase="release";
+- $ export bbase="esr60";
 
 Basic steps to build Fennec DOS (first build)
 ---------------------------------------------

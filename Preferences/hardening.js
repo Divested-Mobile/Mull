@@ -441,6 +441,14 @@ pref("extensions.systemAddon.update.enabled",		false);
  * SECTION: Firefox (anti-)features / components                              *                            *
  ******************************************************************************/
 
+// PREF: Disable Extension recommendations (Firefox >= 65)
+// https://support.mozilla.org/en-US/kb/extension-recommendations
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr",	false);
+
+// PREF: Trusted Recursive Resolver (DNS-over-HTTPS) (disabled)
+// https://wiki.mozilla.org/Trusted_Recursive_Resolver
+//pref("network.trr.mode",					0);
+
 // PREF: Disable WebIDE
 // https://trac.torproject.org/projects/tor/ticket/16222
 // https://developer.mozilla.org/docs/Tools/WebIDE
@@ -514,9 +522,11 @@ pref("privacy.trackingprotection.pbmode.enabled",		true);
 // https://wiki.mozilla.org/Security/Contextual_Identity_Project/Containers
 pref("privacy.userContext.enabled",			true);
 
-// PREF: Enable hardening against various fingerprinting vectors (Tor Uplift project)
+// PREF: Enable Firefox's anti-fingerprinting mode ("resist fingerprinting" or RFP) (Tor Uplift project)
 // https://wiki.mozilla.org/Security/Tor_Uplift/Tracking
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1333933
+// https://wiki.mozilla.org/Security/Fingerprinting
+// NOTICE: RFP breaks some keyboard shortcuts used in certain websites (see #443)
 pref("privacy.resistFingerprinting",			true);
 
 // PREF: Disable the built-in PDF viewer
@@ -531,6 +541,8 @@ pref("privacy.resistFingerprinting",			true);
 pref("datareporting.healthreport.uploadEnabled",		false);
 pref("datareporting.healthreport.service.enabled",		false);
 pref("datareporting.policy.dataSubmissionEnabled",		false);
+// "Allow Firefox to make personalized extension recommendations"
+pref("browser.discovery.enabled",				false);
 
 // PREF: Disable Heartbeat  (Mozilla user rating telemetry)
 // https://wiki.mozilla.org/Advocacy/heartbeat

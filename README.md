@@ -44,6 +44,11 @@ See https://bugzilla.mozilla.org/show_bug.cgi?id=1489384
 - sed -i 's/r17b/r15c/' python/mozboot/mozboot/android.py;
 - ./mach bootstrap
 
+arc4random_buf in expat failure fix
+-----------------------------------
+See https://bugzilla.mozilla.org/show_bug.cgi?id=1516642
+- Apply patch from https://hg.mozilla.org/integration/autoland/rev/57664c81a1de
+
 TODO
 ----
 - Default Settings

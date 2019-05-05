@@ -3,8 +3,8 @@ Mull
 
 Overview
 --------
-Mull is basically Orfox (Tor Browser Android), but without routing over Tor network and upstream Firefox (instead of a modified ESR).
-It enables many features upstreamed by the Tor Uplift project through @pyllyukko's user.js project.
+Mull is basically Tor Browser Android, but without routing over Tor network and upstream Firefox instead of a modified ESR.
+It enables many features upstreamed by the Tor Uplift project through @ghacksuserjs and @pyllyukko's user.js projects.
 It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
 
 Faster builds
@@ -19,7 +19,7 @@ Basic steps to build Mull (first build)
 - git clone |THIS REPO| Mull-Build
 - git clone https://github.com/mozilla/gecko-dev.git
 - cd gecko-dev
-- git checkout esr60 #Choices: master (nightly), release (stable), esr60 (lts)
+- git checkout release #Choices: master (nightly), release (stable), esr60 (lts)
 - ./mach bootstrap #Choose Android non-artifact
 - cat ../Mull-Build/Preferences/hardening.js >> mobile/android/app/mobile.js
 - cp -r ../Mull-Build/Branding/divestos mobile/android/branding/

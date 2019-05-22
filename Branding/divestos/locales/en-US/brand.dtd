@@ -4,6 +4,7 @@
 
 <!ENTITY  brandShortName  "Mull">
 <!ENTITY  brandFullName   "Fennec for DivestOS">
+<!ENTITY  brandProductName "Mull">
 <!ENTITY  vendorShortName "DivestOS">
 
 <!ENTITY  brandPocket     "Pocket">

@@ -1,7 +1,7 @@
 /******
 * name: ghacks user.js
-* date: 15 April 2019
-* version 67-alpha: Barbie Pants
+* date: 28 May 2019
+* version 67-beta: Barbie Pants
 *   "I'm a Barbie pants in a Barbie world. Life in plastic, it's fantastic"
 * authors: v52+ github | v51- www.ghacks.net
 * url: https://github.com/ghacksuserjs/ghacks-user.js
@@ -44,35 +44,35 @@
 
 * INDEX:
 
-     0100: STARTUP
-     0200: GEOLOCATION
-     0300: QUIET FOX
-     0400: BLOCKLISTS / SAFE BROWSING
-     0500: SYSTEM ADD-ONS / EXPERIMENTS
-     0600: BLOCK IMPLICIT OUTBOUND
-     0700: HTTP* / TCP/IP / DNS / PROXY / SOCKS etc
-     0800: LOCATION BAR / SEARCH BAR / SUGGESTIONS / HISTORY / FORMS
-     0900: PASSWORDS
-     1000: CACHE / SESSION (RE)STORE / FAVICONS
-     1200: HTTPS (SSL/TLS / OCSP / CERTS / HPKP / CIPHERS)
-     1400: FONTS
-     1600: HEADERS / REFERERS
-     1700: CONTAINERS
-     1800: PLUGINS
-     2000: MEDIA / CAMERA / MIC
-     2200: WINDOW MEDDLING & LEAKS / POPUPS
-     2300: WEB WORKERS
-     2400: DOM (DOCUMENT OBJECT MODEL) & JAVASCRIPT
-     2500: HARDWARE FINGERPRINTING
-     2600: MISCELLANEOUS
-     2700: PERSISTENT STORAGE
-     2800: SHUTDOWN
-     4000: FPI (FIRST PARTY ISOLATION)
-     4500: RFP (RESIST FINGERPRINTING)
-     4600: RFP ALTERNATIVES
-     4700: RFP ALTERNATIVES (NAVIGATOR / USER AGENT (UA) SPOOFING)
-     5000: PERSONAL
-     9999: DEPRECATED / REMOVED / LEGACY / RENAMED
+  0100: STARTUP
+  0200: GEOLOCATION
+  0300: QUIET FOX
+  0400: BLOCKLISTS / SAFE BROWSING
+  0500: SYSTEM ADD-ONS / EXPERIMENTS
+  0600: BLOCK IMPLICIT OUTBOUND
+  0700: HTTP* / TCP/IP / DNS / PROXY / SOCKS etc
+  0800: LOCATION BAR / SEARCH BAR / SUGGESTIONS / HISTORY / FORMS
+  0900: PASSWORDS
+  1000: CACHE / SESSION (RE)STORE / FAVICONS
+  1200: HTTPS (SSL/TLS / OCSP / CERTS / HPKP / CIPHERS)
+  1400: FONTS
+  1600: HEADERS / REFERERS
+  1700: CONTAINERS
+  1800: PLUGINS
+  2000: MEDIA / CAMERA / MIC
+  2200: WINDOW MEDDLING & LEAKS / POPUPS
+  2300: WEB WORKERS
+  2400: DOM (DOCUMENT OBJECT MODEL) & JAVASCRIPT
+  2500: HARDWARE FINGERPRINTING
+  2600: MISCELLANEOUS
+  2700: PERSISTENT STORAGE
+  2800: SHUTDOWN
+  4000: FPI (FIRST PARTY ISOLATION)
+  4500: RFP (RESIST FINGERPRINTING)
+  4600: RFP ALTERNATIVES
+  4700: RFP ALTERNATIVES (NAVIGATOR / USER AGENT (UA) SPOOFING)
+  5000: PERSONAL
+  9999: DEPRECATED / REMOVED / LEGACY / RENAMED
 
 ******/
 
@@ -125,12 +125,11 @@ pref("browser.newtabpage.activity-stream.feeds.discoverystreamfeed", false); // 
    // pref("browser.library.activity-stream.enabled", false);
 /* 0110: start Firefox in PB (Private Browsing) mode
  * [NOTE] In this mode *all* windows are "private windows" and the PB mode icon is not displayed
- * [WARNING] The P in PB mode is misleading: it means no "persistent" local storage of history,
- * caches, searches or cookies (which you can achieve in normal mode). In fact, it limits or
- * removes the ability to control these, and you need to quit Firefox to clear them. PB is best
- * used as a one off window (File>New Private Window) to provide a temporary self-contained
- * new instance. Closing all Private Windows clears all traces. Repeat as required. PB also does
- * not allow indexedDB which breaks many Extensions that use it including uBlock Origin and uMatrix
+ * [WARNING] The P in PB mode is misleading: it means no "persistent" disk storage such as history,
+ * caches, searches, cookies, localStorage, IndexedDB etc (which you can achieve in normal mode).
+ * In fact, PB mode limits or removes the ability to control some of these, and you need to quit
+ * Firefox to clear them. PB is best used as a one off window (File>New Private Window) to provide
+ * a temporary self-contained new session. Close all Private Windows to clear the PB mode session.
  * [SETTING] Privacy & Security>History>Custom Settings>Always use private browsing mode
  * [1] https://wiki.mozilla.org/Private_Browsing
  * [2] https://spreadprivacy.com/is-private-browsing-really-private/ ***/
@@ -231,7 +230,6 @@ pref("toolkit.telemetry.unified", false);
 pref("toolkit.telemetry.enabled", false); // see [NOTE] above FF58+
 pref("toolkit.telemetry.server", "data:,");
 pref("toolkit.telemetry.archive.enabled", false);
-pref("toolkit.telemetry.cachedClientID", "");
 pref("toolkit.telemetry.newProfilePing.enabled", false); // [FF55+]
 pref("toolkit.telemetry.shutdownPingSender.enabled", false); // [FF55+]
 pref("toolkit.telemetry.updatePing.enabled", false); // [FF56+]
@@ -659,10 +657,7 @@ pref("security.ssl.require_safe_negotiation", true);
 /* 1202: control TLS versions with min and max
  * 1=TLS 1.0, 2=TLS 1.1, 3=TLS 1.2, 4=TLS 1.3
  * [WARNING] Leave these at default, otherwise you alter your TLS fingerprint.
- * Firefox telemetry (April 2019) shows only 0.5% of TLS web traffic uses 1.0 or 1.1
- * [1] http://kb.mozillazine.org/Security.tls.version.*
- * [2] https://www.ssl.com/how-to/turn-off-ssl-3-0-and-tls-1-0-in-your-browser/
- * [2] archived: https://archive.is/hY2Mm ***/
+ * Firefox telemetry (April 2019) shows only 0.5% of TLS web traffic uses 1.0 or 1.1 ***/
    // pref("security.tls.version.min", 3);
    // pref("security.tls.version.max", 4);
 /* 1203: disable SSL session tracking [FF36+]
@@ -785,19 +780,10 @@ pref("security.insecure_connection_text.enabled", true); // [FF60+]
 /*** [SECTION 1400]: FONTS ***/
 pref("_user.js.parrot", "1400 syntax error: the parrot's bereft of life!");
 /* 1401: disable websites choosing fonts (0=block, 1=allow)
- * [WARNING] Blocking fonts can *sometimes* reduce JS font enumeration, but not entropy.
- * There are also other methods to fingerprint fonts. Wait for RFP (4500) to cover this.
+ * This can limit most (but not all) JS font enumeration which is a high entropy fingerprinting vector
+ * [SETUP-WEB] Disabling fonts can uglify the web a fair bit.
  * [SETTING] General>Language and Appearance>Fonts & Colors>Advanced>Allow pages to choose... ***/
-pref("browser.display.use_document_fonts", 0); //BRACE-UNCOMMENTED
-/* 1402: set more legible default fonts
- * [NOTE] Example below for Windows/Western only
- * [SETTING] General>Language and Appearance>Fonts & Colors>Advanced>Serif|Sans-serif|Monospace ***/
-   // pref("font.name.serif.x-unicode", "Georgia");
-   // pref("font.name.serif.x-western", "Georgia"); // default: Times New Roman
-   // pref("font.name.sans-serif.x-unicode", "Arial");
-   // pref("font.name.sans-serif.x-western", "Arial"); // default: Arial
-   // pref("font.name.monospace.x-unicode", "Lucida Console");
-   // pref("font.name.monospace.x-western", "Lucida Console"); // default: Courier New
+pref("browser.display.use_document_fonts", 0);
 /* 1403: disable icon fonts (glyphs) and local fallback rendering
  * [1] https://bugzilla.mozilla.org/789788
  * [2] https://trac.torproject.org/projects/tor/ticket/8455 ***/
@@ -808,13 +794,6 @@ pref("browser.display.use_document_fonts", 0); //BRACE-UNCOMMENTED
 pref("gfx.font_rendering.opentype_svg.enabled", false);
 /* 1405: disable WOFF2 (Web Open Font Format) [FF35+] ***/
    // pref("gfx.downloadable_fonts.woff2.enabled", false);
-/* 1406: disable CSS Font Loading API
- * [NOTE] Disabling fonts can uglify the web a fair bit. ***/
-pref("layout.css.font-loading-api.enabled", false);
-/* 1407: disable special underline handling for a few fonts which you will probably never use [RESTART]
- * Any of these fonts on your system can be enumerated for fingerprinting.
- * [1] http://kb.mozillazine.org/Font.blacklist.underline_offset ***/
-pref("font.blacklist.underline_offset", "");
 /* 1408: disable graphite which FF49 turned back on by default
  * In the past it had security issues. Update: This continues to be the case, see [1]
  * [1] https://www.mozilla.org/security/advisories/mfsa2017-15/#CVE-2017-7778 ***/
@@ -827,45 +806,47 @@ pref("gfx.font_rendering.graphite.enabled", false);
    // pref("font.system.whitelist", ""); // [HIDDEN PREF]
 
 /*** [SECTION 1600]: HEADERS / REFERERS
-     Only *cross domain* referers need controlling and XOriginPolicy (1603) is perfect for that. Thus we enforce
-     the default values for 1601, 1602, 1605 and 1606 to minimize breakage, and only tweak 1603 and 1604.
-
-     Our default settings provide the best balance between protection and amount of breakage.
-     To harden it a bit more you can set XOriginPolicy (1603) to 2 (+ optionally 1604 to 1 or 2).
-     To fix broken sites (including your modem/router), temporarily set XOriginPolicy=0 and XOriginTrimmingPolicy=2 in about:config,
-     use the site and then change the values back. If you visit those sites regularly (e.g. vimeo), use an extension.
-
+     Only *cross domain* referers need controlling: leave 1601, 1602, 1605 and 1606 alone
+     ---
+            harden it a bit: set XOriginPolicy (1603) to 1 (as per the settings below)
+       harden it a bit more: set XOriginPolicy (1603) to 2 (and optionally 1604 to 1 or 2), expect breakage
+     ---
+     If you want any REAL control over referers and breakage, then use an extension. Either:
+              uMatrix: limited by scope, all requests are spoofed or not-spoofed
+       Smart Referrer: granular with source<->destination, whitelists
+     ---
                     full URI: https://example.com:8888/foo/bar.html?id=1234
        scheme+host+port+path: https://example.com:8888/foo/bar.html
             scheme+host+port: https://example.com:8888
-
+     ---
      #Required reading [#] https://feeding.cloud.geek.nz/posts/tweaking-referrer-for-privacy-in-firefox/
 ***/
 pref("_user.js.parrot", "1600 syntax error: the parrot rests in peace!");
 /* 1601: ALL: control when images/links send a referer
  * 0=never, 1=send only when links are clicked, 2=for links and images (default) ***/
-pref("network.http.sendRefererHeader", 2);
+   // pref("network.http.sendRefererHeader", 2); // [DEFAULT: 2]
 /* 1602: ALL: control the amount of information to send
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
-pref("network.http.referer.trimmingPolicy", 0);
-/* 1603: CROSS ORIGIN: control when to send a referer [SETUP-WEB]
- * 0=always (default), 1=only if base domains match, 2=only if hosts match ***/
+   // pref("network.http.referer.trimmingPolicy", 0); // [DEFAULT: 0]
+/* 1603: CROSS ORIGIN: control when to send a referer
+ * 0=always (default), 1=only if base domains match, 2=only if hosts match
+ * [SETUP-WEB] Known to cause issues with older modems/routers and some sites e.g vimeo ***/
 pref("network.http.referer.XOriginPolicy", 1);
 /* 1604: CROSS ORIGIN: control the amount of information to send [FF52+]
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
-pref("network.http.referer.XOriginTrimmingPolicy", 0);
+pref("network.http.referer.XOriginTrimmingPolicy", 0); // [DEFAULT: 0]
 /* 1605: ALL: disable spoofing a referer
  * [WARNING] Do not set this to true, as spoofing effectively disables the anti-CSRF
  * (Cross-Site Request Forgery) protections that some sites may rely on ***/
-pref("network.http.referer.spoofSource", false); // [DEFAULT: false]
+   // pref("network.http.referer.spoofSource", false); // [DEFAULT: false]
 /* 1606: ALL: set the default Referrer Policy [FF59+]
  * 0=no-referer, 1=same-origin, 2=strict-origin-when-cross-origin, 3=no-referrer-when-downgrade
  * [NOTE] This is only a default, it can be overridden by a site-controlled Referrer Policy
  * [1] https://www.w3.org/TR/referrer-policy/
  * [2] https://developer.mozilla.org/docs/Web/HTTP/Headers/Referrer-Policy
  * [3] https://blog.mozilla.org/security/2018/01/31/preventing-data-leaks-by-stripping-path-information-in-http-referrers/ ***/
-pref("network.http.referer.defaultPolicy", 3); // [DEFAULT: 3]
-pref("network.http.referer.defaultPolicy.pbmode", 2); // [DEFAULT: 2]
+   // pref("network.http.referer.defaultPolicy", 3); // [DEFAULT: 3]
+   // pref("network.http.referer.defaultPolicy.pbmode", 2); // [DEFAULT: 2]
 /* 1607: TOR: hide (not spoof) referrer when leaving a .onion domain [FF54+]
  * [NOTE] Firefox cannot access .onion sites by default. We recommend you use
  * the Tor Browser which is specifically designed for hidden services
@@ -958,7 +939,7 @@ pref("media.getusermedia.audiocapture.enabled", false);
  * 0=Allowed, 1=Blocked (2=Prompt - removed in FF66)
  * [NOTE] You can set exceptions under site permissions
  * [SETTING] Privacy & Security>Permissions>Block websites from automatically playing sound ***/
-pref("media.autoplay.default", 1);
+pref("media.autoplay.default", 1); // [DEFAULT: 1 in FF67+]
 /* 2031: disable autoplay of HTML5 media if you interacted with the site [FF66+] ***/
 pref("media.autoplay.enabled.user-gestures-needed", false);
 /* 2032: disable audio autoplay in non-active tabs [FF51+]
@@ -1086,17 +1067,11 @@ pref("javascript.options.asmjs", false);
 /* 2422: disable WebAssembly [FF52+] [SETUP-PERF]
  * [1] https://developer.mozilla.org/docs/WebAssembly ***/
 pref("javascript.options.wasm", false);
-/* 2426: disable Intersection Observer API [FF53+]
- * Almost a year to complete, three versions late to stable (as default false),
- * number #1 cause of crashes in nightly numerous times, and is (primarily) an
- * ad network API for "ad viewability checks" down to a pixel level
+/* 2426: disable Intersection Observer API [FF55+]
  * [1] https://developer.mozilla.org/docs/Web/API/Intersection_Observer_API
  * [2] https://w3c.github.io/IntersectionObserver/
  * [3] https://bugzilla.mozilla.org/1243846 ***/
-pref("dom.IntersectionObserver.enabled", false);
-/* 2428: enforce DOMHighResTimeStamp API
- * [WARNING] Required for normalization of timestamps and any timer resolution mitigations ***/
-pref("dom.event.highrestimestamp.enabled", true); // [DEFAULT: true]
+pref("dom.IntersectionObserver.enabled", false); //BRACE-UNCOMMENTED
 /* 2429: enable (limited but sufficient) window.opener protection [FF65+]
  * Makes rel=noopener implicit for target=_blank in anchor and area elements when no rel attribute is set ***/
 pref("dom.targetBlankNoOpener.enabled", true);
@@ -1191,11 +1166,6 @@ pref("network.http.redirection-limit", 10);
 pref("permissions.manager.defaultsUrl", "");
 /* 2617: remove webchannel whitelist ***/
 pref("webchannel.allowObject.urlWhitelist", "");
-/* 2618: disable exposure of system colors to CSS or canvas [FF44+]
- * [NOTE] See second listed bug: may cause black on black for elements with undefined colors
- * [SETUP-CHROME] Might affect CSS in themes and extensions
- * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=232227,1330876 ***/
-pref("ui.use_standins_for_native_colors", true);
 /* 2619: enforce Punycode for Internationalized Domain Names to eliminate possible spoofing
  * Firefox has *some* protections, but it is better to be safe than sorry. The downside: it will also
  * display legitimate IDN's punycoded, which might be undesirable for users of non-latin alphabets
@@ -1219,6 +1189,9 @@ pref("pdfjs.disabled", false); // [DEFAULT: false]
 /* 2621: disable links launching Windows Store on Windows 8/8.1/10 [WINDOWS]
  * [1] https://www.ghacks.net/2016/03/25/block-firefox-chrome-windows-store/ ***/
 pref("network.protocol-handler.external.ms-windows-store", false);
+/* 2622: disable middlemouse paste leaking on Linux
+ * [1] https://bugzilla.mozilla.org/1528289 */
+pref("middlemouse.paste", false); // [DEFAULT: false on Windows]
 
 /** DOWNLOADS ***/
 /* 2650: discourage downloading to desktop
@@ -1241,12 +1214,12 @@ pref("browser.download.forbid_open_with", true); //BRACE-UNCOMMENTED
 
 /** EXTENSIONS ***/
 /* 2660: lock down allowed extension directories
- * [SETUP-CHROME] This will break extensions, language packs, themes and any other XPI files which are
- * installed outside of profile directories (see GitHub issue #674 for an issue with language packs in Linux)
+ * [SETUP-CHROME] This will break extensions, language packs, themes and any other
+ * XPI files which are installed outside of profile and application directories
  * [1] https://mike.kaply.com/2012/02/21/understanding-add-on-scopes/
  * [1] archived: https://archive.is/DYjAM ***/
-   // pref("extensions.enabledScopes", 1); // [HIDDEN PREF] //BRACE-COMMENTED
-   // pref("extensions.autoDisableScopes", 15); //BRACE-COMMENTED
+   // pref("extensions.enabledScopes", 5); // [HIDDEN PREF] //BRACE-COMMENTED
+   // pref("extensions.autoDisableScopes", 15); // [DEFAULT: 15] //BRACE-COMMENTED
 /* 2662: disable webextension restrictions on certain mozilla domains (also see 4503) [FF60+]
  * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1384330,1406795,1415644,1453988 ***/
    // pref("extensions.webextensions.restrictedDomains", "");
@@ -1400,8 +1373,8 @@ pref("privacy.sanitize.timeSpan", 0);
  ** 1473247 - isolate IP addresses (FF63+)
  ** 1492607 - isolate postMessage with targetOrigin "*" (requires 4002) (FF65+)
  ** 1542309 - isolate top-level domain URLs (FF68+)
- ** 1330467 - isolate site permissions (FF68+)
  ** 1506693 - isolate pdfjs range-based requests (FF68+)
+ ** 1330467 - isolate site permissions (coming)
 ***/
 pref("_user.js.parrot", "4000 syntax error: the parrot's pegged out");
 /* 4001: enable First Party Isolation [FF51+]
@@ -1476,10 +1449,10 @@ pref("privacy.firstparty.isolate.restrict_opener_access", true); // [DEFAULT: tr
  ** 1479239 - return "no-preference" with prefers-reduced-motion (FF63+)
  ** 1363508 - spoof/suppress Pointer Events (see 4614) (FF64+)
       FF65: pointerEvent.pointerid (1492766)
- ** 1485266 - disable exposure of system colors to CSS or canvas (see 2618) (FF67+)
+ ** 1485266 - disable exposure of system colors to CSS or canvas (see 4615) (FF67+)
  ** 1407366 - enable inner window letterboxing (see 4504) (FF67+)
  ** 1540726 - return "light" with prefers-color-scheme (FF67+)
-        [1] https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
+      [1] https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
 ***/
 pref("_user.js.parrot", "4500 syntax error: the parrot's popped 'is clogs");
 /* 4501: enable privacy.resistFingerprinting [FF41+]
@@ -1593,6 +1566,13 @@ pref("webgl.enable-debug-renderer-info", false);
    // [1] https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent
 pref("dom.w3c_pointer_events.enabled", false);
 // * * * /
+// FF67+
+// 4615: [2618] disable exposure of system colors to CSS or canvas [FF44+]
+  // [NOTE] See second listed bug: may cause black on black for elements with undefined colors
+  // [SETUP-CHROME] Might affect CSS in themes and extensions
+  // [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=232227,1330876
+pref("ui.use_standins_for_native_colors", true);
+// * * * /
 // ***/
 
 /*** [SECTION 4700]: RFP ALTERNATIVES (NAVIGATOR / USER AGENT (UA) SPOOFING)
@@ -1654,10 +1634,7 @@ pref("clipboard.autocopy", false); // disable autocopy default [LINUX] //BRACE-U
    // pref("ui.key.menuAccessKey", 0); // disable alt key toggling the menu bar [RESTART]
 /* OTHER ***/
 pref("browser.bookmarks.max_backups", 2); //BRACE-UNCOMMENTED
-pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false); // disable CFR [FF64+] //BRACE-UNCOMMENTED
-      // [SETTING] General>Browsing>Recommend extensions as you browse
-      // [1] https://support.mozilla.org/en-US/kb/extension-recommendations
-pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // disable CFR [FF67+] //BRACE-UNCOMMENTED
+pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // disable CFR [FF64+] //BRACE-UNCOMMENTED
       // [SETTING] General>Browsing>Recommend extensions as you browse
 pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false); // disable CFR [FF67+] //BRACE-UNCOMMENTED
       // [SETTING] General>Browsing>Recommend features as you browse
@@ -1764,6 +1741,17 @@ pref("browser.chrome.errorReporter.submitUrl", "");
 // 0502: disable Mozilla permission to silently opt you into tests
    // [-] https://bugzilla.mozilla.org/1415625
 pref("network.allow-experiments", false);
+// * * * /
+// FF67
+// 2428: enforce DOMHighResTimeStamp API
+   // [WARNING] Required for normalization of timestamps and any timer resolution mitigations
+   // [-] https://bugzilla.mozilla.org/1485264
+pref("dom.event.highrestimestamp.enabled", true); // [DEFAULT: true]
+// 5000's: disable CFR [FF64+] - split into two new prefs: *cfr.addons, *cfr.features
+   // [SETTING] General>Browsing>Recommend extensions as you browse
+   // [1] https://support.mozilla.org/en-US/kb/extension-recommendations
+   // [-] https://bugzilla.mozilla.org/1528953
+   // pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
 // * * * /
 // ***/
 

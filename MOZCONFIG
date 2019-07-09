@@ -11,7 +11,7 @@ ac_add_options --target=arm-linux-androideabi
 
 # Specify paths
 ac_add_options --with-android-sdk="/home/emy/.mozbuild/android-sdk-linux"
-ac_add_options --with-android-ndk="/home/emy/.mozbuild/android-ndk-r15c"
+ac_add_options --with-android-ndk="/home/emy/.mozbuild/android-ndk-r17b"
 CC="/home/emy/.mozbuild/clang/bin/clang"
 CXX="/home/emy/.mozbuild/clang/bin/clang++"
 

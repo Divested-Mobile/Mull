@@ -1,8 +1,8 @@
 /******
 * name: ghacks user.js
-* date: 26 June 2019
-* version 68-alpha: Knock on Pants
-*   "It's like thunder, lightning... the way you wear me is frightening"
+* date: 1 September 2019
+* version 69-beta: Pants One More Time
+*   "When I'm not with pants I lose my mind. Give me a sign. Hit me, pants, one more time."
 * authors: v52+ github | v51- www.ghacks.net
 * url: https://github.com/ghacksuserjs/ghacks-user.js
 * license: MIT: https://github.com/ghacksuserjs/ghacks-user.js/blob/master/LICENSE.txt
@@ -112,9 +112,7 @@ pref("browser.newtabpage.activity-stream.telemetry.ping.endpoint", "");
 /* 0105b: disable Activity Stream Snippets
  * Runs code received from a server (aka Remote Code Execution) and sends information back to a metrics server
  * [1] https://abouthome-snippets-service.readthedocs.io/ ***/
-pref("browser.aboutHomeSnippets.updateUrl", "");
 pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", "");
-pref("browser.newtabpage.activity-stream.disableSnippets", true);
 pref("browser.newtabpage.activity-stream.feeds.snippets", false);
 /* 0105c: disable Activity Stream Top Stories, Pocket-based and/or sponsored content ***/
 pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
@@ -202,11 +200,6 @@ pref("app.update.auto", false);
  * used when installing/updating an extension, and in daily background update checks: if false, it
  * hides the expanded text description (if it exists) when you "show more details about an addon" ***/
    // pref("extensions.getAddons.cache.enabled", false);
-/* 0307: disable auto updating of lightweight themes (LWT)
- * Not to be confused with themes in 0301* + 0302*, which use the FF55+ Theme API
- * Mozilla plan to convert existing LWTs and remove LWT support in the future, see [1]
- * [1] https://blog.mozilla.org/addons/2018/09/20/future-themes-here/ ***/
-pref("lightweightThemes.update.enabled", false);
 /* 0308: disable search update
  * [SETTING] General>Firefox Updates>Automatically update search engines ***/
 pref("browser.search.update", false);
@@ -274,9 +267,8 @@ pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false); // [FF58+]
  * [2] https://www.gnu.gl/blog/Posts/multiple-vulnerabilities-in-pocket/ ***/
 pref("extensions.pocket.enabled", false);
 /* 0390: disable Captive Portal detection
- * [1] https://en.wikipedia.org/wiki/Captive_portal
- * [2] https://wiki.mozilla.org/Necko/CaptivePortal
- * [3] https://trac.torproject.org/projects/tor/ticket/21790 ***/
+ * [1] https://www.eff.org/deeplinks/2017/08/how-captive-portals-interfere-wireless-security-and-privacy
+ * [2] https://wiki.mozilla.org/Necko/CaptivePortal ***/
 pref("captivedetect.canonicalURL", "");
 pref("network.captive-portal-service.enabled", false); // [FF52+]
 /* 0391: disable Network Connectivity checks [FF65+]
@@ -531,10 +523,6 @@ pref("browser.formfill.enable", false);
  * [NOTE] We also clear history and downloads on exiting Firefox (see 2803)
  * [SETTING] Privacy & Security>History>Custom Settings>Remember browsing and download history ***/
    // pref("places.history.enabled", false);
-/* 0864: disable date/time picker
- * This can leak your locale if not en-US
- * [1] https://trac.torproject.org/projects/tor/ticket/21787 ***/
-pref("dom.forms.datetime", false);
 /* 0870: disable Windows jumplist [WINDOWS] ***/
 pref("browser.taskbar.lists.enabled", false);
 pref("browser.taskbar.lists.frequent.enabled", false);
@@ -597,6 +585,7 @@ pref("_user.js.parrot", "1000 syntax error: the parrot's gone to meet 'is maker!
  * [1] http://kb.mozillazine.org/Browser.cache.disk_cache_ssl ***/
    // pref("browser.cache.disk_cache_ssl", false); //BRACE-COMMENTED
 /* 1003: disable memory cache
+/* capacity: -1=determine dynamically (default), 0=none, n=memory capacity in kilobytes
  * [NOTE] Not recommended due to performance issues ***/
    // pref("browser.cache.memory.enable", false);
    // pref("browser.cache.memory.capacity", 0); // [HIDDEN PREF]
@@ -796,8 +785,6 @@ pref("browser.display.use_document_fonts", 0);
 /* 1404: disable rendering of SVG OpenType fonts
  * [1] https://wiki.mozilla.org/SVGOpenTypeFonts - iSECPartnersReport recommends to disable this ***/
 pref("gfx.font_rendering.opentype_svg.enabled", false);
-/* 1405: disable WOFF2 (Web Open Font Format) [FF35+] ***/
-   // pref("gfx.downloadable_fonts.woff2.enabled", false);
 /* 1408: disable graphite which FF49 turned back on by default
  * In the past it had security issues. Update: This continues to be the case, see [1]
  * [1] https://www.mozilla.org/security/advisories/mfsa2017-15/#CVE-2017-7778 ***/
@@ -880,15 +867,11 @@ pref("privacy.userContext.enabled", true);
 pref("privacy.usercontext.about_newtab_segregation.enabled", true); // [DEFAULT: true in FF61+]
 /* 1704: set behaviour on "+ Tab" button to display container menu [FF53+] [SETUP-CHROME]
  * 0=no menu (default), 1=show when clicked, 2=show on long press
- * [NOTE] The menu does not contain a non-container tab option (use Ctrl+T to open non-container tab)
  * [1] https://bugzilla.mozilla.org/1328756 ***/
 pref("privacy.userContext.longPressBehavior", 2);
 
 /*** [SECTION 1800]: PLUGINS ***/
 pref("_user.js.parrot", "1800 syntax error: the parrot's pushing up daisies!");
-/* 1802: enable click to play and set to 0 minutes ***/
-pref("plugins.click_to_play", true);
-pref("plugin.sessionPermissionNow.intervalInMinutes", 0);
 /* 1803: disable Flash plugin
  * 0=deactivated, 1=ask, 2=enabled
  * ESR52.x is the last branch to *fully* support NPAPI, FF52+ stable only supports Flash
@@ -944,15 +927,15 @@ pref("media.getusermedia.audiocapture.enabled", false);
    // pref("permissions.default.camera", 2);
    // pref("permissions.default.microphone", 2);
 /* 2030: disable autoplay of HTML5 media [FF63+]
- * 0=Allowed, 1=Blocked (2=Prompt - removed in FF66)
+ * 0=Allow all, 1=Block non-muted media, 2=Prompt (removed in FF66), 5=Block all (added in FF69+)
  * [NOTE] You can set exceptions under site permissions
- * [SETTING] Privacy & Security>Permissions>Block websites from automatically playing sound ***/
-pref("media.autoplay.default", 1); // [DEFAULT: 1 in FF67+]
+ * [SETTING] Privacy & Security>Permissions>Autoplay>Settings>Default... ***/
+   // pref("media.autoplay.default", 5); // [DEFAULT: 1 in FF67+]
 /* 2031: disable autoplay of HTML5 media if you interacted with the site [FF66+] ***/
 pref("media.autoplay.enabled.user-gestures-needed", false);
-/* 2032: disable audio autoplay in non-active tabs [FF51+]
+/* 2032: disable autoplay of HTML5 media in non-active tabs [FF51+]
  * [1] https://www.ghacks.net/2016/11/14/firefox-51-blocks-automatic-audio-playback-in-non-active-tabs/ ***/
-pref("media.block-autoplay-until-in-foreground", true);
+pref("media.block-autoplay-until-in-foreground", true); // [DEFAULT: true]
 
 /*** [SECTION 2200]: WINDOW MEDDLING & LEAKS / POPUPS ***/
 pref("_user.js.parrot", "2200 syntax error: the parrot's 'istory!");
@@ -1048,11 +1031,15 @@ pref("_user.js.parrot", "2400 syntax error: the parrot's kicked the bucket!");
  * the website for it to look at the clipboard
  * [1] https://www.ghacks.net/2014/01/08/block-websites-reading-modifying-clipboard-contents-firefox/ ***/
 pref("dom.event.clipboardevents.enabled", false);
-/* 2403: disable clipboard commands (cut/copy) from "non-privileged" content [FF41+]
+/* 2403: disable middlemouse paste leaking clipboard content on Linux after autoscroll
+ * Defense in depth if clipboard events are enabled (see 2402)
+ * [1] https://bugzilla.mozilla.org/1528289 */
+pref("middlemouse.paste", false); // [DEFAULT: false on Windows]
+/* 2404: disable clipboard commands (cut/copy) from "non-privileged" content [FF41+]
  * this disables document.execCommand("cut"/"copy") to protect your clipboard
  * [1] https://bugzilla.mozilla.org/1170911 ***/
 pref("dom.allow_cut_copy", false);
-/* 2404: disable "Confirm you want to leave" dialog on page close
+/* 2405: disable "Confirm you want to leave" dialog on page close
  * Does not prevent JS leaks of the page close event.
  * [1] https://developer.mozilla.org/docs/Web/Events/beforeunload
  * [2] https://support.mozilla.org/questions/1043508 ***/
@@ -1197,9 +1184,6 @@ pref("pdfjs.disabled", false); // [DEFAULT: false]
 /* 2621: disable links launching Windows Store on Windows 8/8.1/10 [WINDOWS]
  * [1] https://www.ghacks.net/2016/03/25/block-firefox-chrome-windows-store/ ***/
 pref("network.protocol-handler.external.ms-windows-store", false);
-/* 2622: disable middlemouse paste leaking on Linux
- * [1] https://bugzilla.mozilla.org/1528289 */
-pref("middlemouse.paste", false); // [DEFAULT: false on Windows]
 
 /** DOWNLOADS ***/
 /* 2650: discourage downloading to desktop
@@ -1236,9 +1220,6 @@ pref("browser.download.forbid_open_with", true); //BRACE-UNCOMMENTED
 /* 2680: enable CSP (Content Security Policy)
  * [1] https://developer.mozilla.org/docs/Web/HTTP/CSP ***/
 pref("security.csp.enable", true); // [DEFAULT: true]
-/* 2682: enable CSP 1.1 experimental hash-source directive [FF29+]
- * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=855326,883975 ***/
-pref("security.csp.experimentalEnabled", true);
 /* 2684: enforce a security delay on some confirmation dialogs such as install, open/save
  * [1] http://kb.mozillazine.org/Disable_extension_install_delay_-_Firefox
  * [2] https://www.squarefree.com/2004/07/01/race-conditions-in-security-dialogs/ ***/
@@ -1260,12 +1241,12 @@ pref("security.dialog_enable_delay", 700);
 ***/
 pref("_user.js.parrot", "2700 syntax error: the parrot's joined the bleedin' choir invisible!");
 /* 2701: disable 3rd-party cookies and site-data [SETUP-WEB]
- * 0=Accept cookies and site data (default), 1=(Block) All third-party cookies, 2=(Block) All cookies,
+ * 0=Accept cookies and site data, 1=(Block) All third-party cookies, 2=(Block) All cookies,
  * 3=(Block) Cookies from unvisited sites, 4=(Block) Third-party trackers (FF63+)
  * [NOTE] Value 4 is tied to the Tracking Protection lists
  * [NOTE] You can set exceptions under site permissions or use an extension
  * [SETTING] Privacy & Security>Content Blocking>Custom>Choose what to block>Cookies ***/
-pref("network.cookie.cookieBehavior", 1);
+pref("network.cookie.cookieBehavior", 1); // [DEFAULT: 4 in FF69+]
 /* 2702: set third-party cookies (i.e ALL) (if enabled, see 2701) to session-only
    and (FF58+) set third-party non-secure (i.e HTTP) cookies to session-only
    [NOTE] .sessionOnly overrides .nonsecureSessionOnly except when .sessionOnly=false and
@@ -1352,9 +1333,9 @@ pref("privacy.cpd.offlineApps", true); // Offline Website Data
 pref("privacy.cpd.passwords", false); // this is not listed
 pref("privacy.cpd.sessions", true); // Active Logins
 pref("privacy.cpd.siteSettings", false); // Site Preferences
-/* 2805: privacy.*.openWindows (clear session restore data) [FF34+]
- * [NOTE] There is a years-old bug that these cause two windows when Firefox restarts.
- * You do not need these anyway if session restore is cleared with history (see 2803) ***/
+/* 2805: clear Session Restore data when sanitizing on shutdown or manually [FF34+]
+ * [NOTE] Not needed if Session Restore is not used (see 0102) or is already cleared with history (see 2803)
+ * [NOTE] privacy.cpd.openWindows has a bug that causes an additional window to open ***/
    // pref("privacy.clearOnShutdown.openWindows", true);
    // pref("privacy.cpd.openWindows", true);
 /* 2806: reset default 'Time range to clear' for 'Clear Recent History' (see 2804)
@@ -1382,7 +1363,7 @@ pref("privacy.sanitize.timeSpan", 0);
  ** 1492607 - isolate postMessage with targetOrigin "*" (requires 4002) (FF65+)
  ** 1542309 - isolate top-level domain URLs (FF68+)
  ** 1506693 - isolate pdfjs range-based requests (FF68+)
- ** 1330467 - isolate site permissions (coming)
+ ** 1330467 - isolate site permissions (FF69+)
 ***/
 pref("_user.js.parrot", "4000 syntax error: the parrot's pegged out");
 /* 4001: enable First Party Isolation [FF51+]
@@ -1461,6 +1442,7 @@ pref("privacy.firstparty.isolate.restrict_opener_access", true); // [DEFAULT: tr
  ** 1407366 - enable inner window letterboxing (see 4504) (FF67+)
  ** 1540726 - return "light" with prefers-color-scheme (FF67+)
       [1] https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
+ ** 1564422 - spoof audioContext outputLatency (FF70+)
 ***/
 pref("_user.js.parrot", "4500 syntax error: the parrot's popped 'is clogs");
 /* 4501: enable privacy.resistFingerprinting [FF41+]
@@ -1764,6 +1746,37 @@ pref("dom.event.highrestimestamp.enabled", true); // [DEFAULT: true]
    // [1] https://support.mozilla.org/en-US/kb/extension-recommendations
    // [-] https://bugzilla.mozilla.org/1528953
    // pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr", false);
+// * * * /
+// FF68
+// 0105b: disable Activity Stream Snippets
+   // [-] https://bugzilla.mozilla.org/1540939
+pref("browser.aboutHomeSnippets.updateUrl", "");
+pref("browser.newtabpage.activity-stream.disableSnippets", true);
+// 0307: disable auto updating of lightweight themes (LWT)
+   // Not to be confused with themes in 0301* + 0302*, which use the FF55+ Theme API
+   // Mozilla plan to convert existing LWTs and remove LWT support in the future, see [1]
+   // [1] https://blog.mozilla.org/addons/2018/09/20/future-themes-here/
+   // [-] (part3b) https://bugzilla.mozilla.org/1525762
+pref("lightweightThemes.update.enabled", false);
+// 2682: enable CSP 1.1 experimental hash-source directive [FF29+]
+   // [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=855326,883975
+   // [-] https://bugzilla.mozilla.org/1386214
+pref("security.csp.experimentalEnabled", true);
+// * * * /
+// ***/
+
+// ESR68.x still uses all the following prefs
+// [NOTE] replace the * with a slash in the line above to re-enable them
+// FF69
+// 1405: disable WOFF2 (Web Open Font Format) [FF35+]
+   // pref("gfx.downloadable_fonts.woff2.enabled", false);
+   // [-] https://bugzilla.mozilla.org/1556991
+// 1802: enable click to play
+   // [-] https://bugzilla.mozilla.org/1519434
+pref("plugins.click_to_play", true);
+// 2033: disable autoplay for muted videos [FF63+] - replaced by `media.autoplay.default` options (2030)
+   // [-] https://bugzilla.mozilla.org/1562331
+   // pref("media.autoplay.allow-muted", false);
 // * * * /
 // ***/
 

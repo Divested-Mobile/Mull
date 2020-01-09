@@ -3,9 +3,15 @@ Mull
 
 Overview
 --------
-Mull is kinda sorta Tor Browser Android, but without routing over Tor network and upstream Firefox instead of a modified ESR.
+Mull is kinda sorta Tor Browser Android, but without routing over Tor network and upstream Firefox.
 It enables many features upstreamed by the Tor Uplift project through @ghacksuserjs and @pyllyukko's user.js projects.
 It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
+
+Deprecation Notice
+------------------
+Fennec (Firefox for Android) is in strict maintenance mode and only supported on the ESR68 branch.
+Fenix is the future replacement, but is currently under heavy development.
+Being said, Mull most likely doesn't have long to live.
 
 Faster builds
 -------------
@@ -19,7 +25,7 @@ Basic steps to build Mull (first build)
 - git clone |THIS REPO| Mull-Build
 - git clone https://github.com/mozilla/gecko-dev.git
 - cd gecko-dev
-- git checkout release #Choices: master (nightly), release (stable), esr68 (lts)
+- git checkout esr68
 - ./mach bootstrap #Choose Android non-artifact
 - cat ../Mull-Build/Preferences/*.js >> mobile/android/app/mobile.js
 - cp -r ../Mull-Build/Branding/divestos mobile/android/branding/

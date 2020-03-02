@@ -1,7 +1,7 @@
 /******
 * name: ghacks user.js
-* date: 19 December 2019
-* version 72-alpha
+* date: 15 February 2020
+* version 73-beta
 * authors: v52+ github | v51- www.ghacks.net
 * url: https://github.com/ghacksuserjs/ghacks-user.js
 * license: MIT: https://github.com/ghacksuserjs/ghacks-user.js/blob/master/LICENSE.txt
@@ -83,10 +83,10 @@
 pref("_user.js.parrot", "START: Oh yes, the Norwegian Blue... what's wrong with it?");
 
 /* 0000: disable about:config warning
- * The XUL version can still be accessed in FF71+ @ chrome://global/content/config.xul
- * and in FF73+ @ chrome://global/content/config.xhtml ***/
-pref("general.warnOnAboutConfig", false); // for the XUL version
-pref("browser.aboutConfig.showWarning", false); // for the new HTML version [FF71+]
+ * FF71-72: chrome://global/content/config.xul
+ * FF73+: chrome://global/content/config.xhtml ***/
+pref("general.warnOnAboutConfig", false); // XUL/XHTML version
+pref("browser.aboutConfig.showWarning", false); // HTML version [FF71+]
 
 /*** [SECTION 0100]: STARTUP ***/
 pref("_user.js.parrot", "0100 syntax error: the parrot's dead!");
@@ -113,7 +113,6 @@ pref("browser.newtab.preload", false);
 /* 0105a: disable Activity Stream telemetry ***/
 pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 pref("browser.newtabpage.activity-stream.telemetry", false);
-pref("browser.newtabpage.activity-stream.telemetry.ping.endpoint", "");
 /* 0105b: disable Activity Stream Snippets
  * Runs code received from a server (aka Remote Code Execution) and sends information back to a metrics server
  * [1] https://abouthome-snippets-service.readthedocs.io/ ***/
@@ -238,7 +237,6 @@ pref("toolkit.telemetry.shutdownPingSender.enabled", false); // [FF55+]
 pref("toolkit.telemetry.updatePing.enabled", false); // [FF56+]
 pref("toolkit.telemetry.bhrPing.enabled", false); // [FF57+] Background Hang Reporter
 pref("toolkit.telemetry.firstShutdownPing.enabled", false); // [FF57+]
-pref("toolkit.telemetry.hybridContent.enabled", false); // [FF59+]
 /* 0331: disable Telemetry Coverage
  * [1] https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/ ***/
 pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
@@ -360,7 +358,7 @@ pref("extensions.screenshots.upload-disabled", true); // [FF60+] //BRACE-UNCOMME
 /* 0517: disable Form Autofill
  * [NOTE] Stored data is NOT secure (uses a JSON file)
  * [NOTE] Heuristics controls Form Autofill on forms without @autocomplete attributes
- * [SETTING] Options>Privacy&Security>Forms and Autofill>Autofill addresses (FF73+)
+ * [SETTING] Privacy & Security>Forms and Autofill>Autofill addresses (FF74+)
  * [1] https://wiki.mozilla.org/Firefox/Features/Form_Autofill
  * [2] https://www.ghacks.net/2017/05/24/firefoxs-new-form-autofill-is-awesome/ ***/
 pref("extensions.formautofill.addresses.enabled", false); // [FF55+]
@@ -1082,10 +1080,6 @@ pref("_user.js.parrot", "2500 syntax error: the parrot's shuffled off 'is mortal
  * [NOTE] From FF52+ Battery Status API is only available in chrome/privileged code. see [1]
  * [1] https://bugzilla.mozilla.org/1313580 ***/
 pref("dom.battery.enabled", false); //BRACE-UNCOMMENTED
-/* 2504: disable virtual reality devices
- * Optional protection depending on your connected devices
- * [1] https://developer.mozilla.org/docs/Web/API/WebVR_API ***/
-pref("dom.vr.enabled", false); //BRACE-UNCOMMENTED
 /* 2505: disable media device enumeration [FF29+]
  * [NOTE] media.peerconnection.enabled should also be set to false (see 2001)
  * [1] https://wiki.mozilla.org/Media/getUserMedia
@@ -1106,6 +1100,15 @@ pref("dom.webaudio.enabled", false);
  * [1] https://github.com/WICG/media-capabilities
  * [2] https://wicg.github.io/media-capabilities/#security-privacy-considerations ***/
    // pref("media.media-capabilities.enabled", false);
+/* 2520: disable virtual reality devices
+ * Optional protection depending on your connected devices
+ * [1] https://developer.mozilla.org/docs/Web/API/WebVR_API ***/
+pref("dom.vr.enabled", false); //BRACE-UNCOMMENTED
+/* 2521: set a default permission for Virtual Reality (see 2520) [FF73+]
+ * 0=always ask (default), 1=allow, 2=block
+ * [SETTING] to add site exceptions: Page Info>Permissions>Access Virtual Reality Devices
+ * [SETTING] to manage site exceptions: Options>Privacy & Security>Permissions>Virtual Reality>Settings ***/
+   // pref("permissions.default.xr", 0);
 
 /*** [SECTION 2600]: MISCELLANEOUS ***/
 pref("_user.js.parrot", "2600 syntax error: the parrot's run down the curtain!");
@@ -1265,14 +1268,6 @@ pref("network.cookie.thirdparty.nonsecureSessionOnly", true); // [FF58+]
  * [WARNING] This will break a LOT of sites' functionality AND extensions!
  * You are better off using an extension for more granular control ***/
    // pref("dom.storage.enabled", false);
-/* 2720: enforce IndexedDB (IDB) as enabled
- * IDB is required for extensions and Firefox internals (even before FF63 in [1])
- * To control *website* IDB data, control allowing cookies and service workers, or use
- * Temporary Containers. To mitigate *website* IDB, FPI helps (4001), and/or sanitize
- * on close (Offline Website Data, see 2800) or on-demand (Ctrl-Shift-Del), or automatically
- * via an extension. Note that IDB currently cannot be sanitized by host.
- * [1] https://blog.mozilla.org/addons/2018/08/03/new-backend-for-storage-local-api/ ***/
-pref("dom.indexedDB.enabled", true); // [DEFAULT: true]
 /* 2730: disable offline cache ***/
    // pref("browser.cache.offline.enable", false); //BRACE-COMMENTED
 /* 2740: disable service worker cache and cache storage
@@ -1439,10 +1434,11 @@ pref("privacy.firstparty.isolate", true);
       FF65: pointerEvent.pointerid (1492766)
  ** 1485266 - disable exposure of system colors to CSS or canvas (see 4615) (FF67+)
  ** 1407366 - enable inner window letterboxing (see 4504) (FF67+)
- ** 1540726 - return "light" with prefers-color-scheme (see 4616) (FF67+)
+ ** 1494034 - return "light" with prefers-color-scheme (see 4616) (FF67+)
       [1] https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
  ** 1564422 - spoof audioContext outputLatency (FF70+)
  ** 1595823 - spoof audioContext sampleRate (FF72+)
+ ** 1607316 - spoof pointer as coarse and hover as none (ANDROID) (FF74+)
 ***/
 pref("_user.js.parrot", "4500 syntax error: the parrot's popped 'is clogs");
 /* 4501: enable privacy.resistFingerprinting [FF41+]
@@ -1565,12 +1561,12 @@ pref("dom.w3c_pointer_events.enabled", false);
 // * * * /
 // FF67+
 // 4615: [2618] disable exposure of system colors to CSS or canvas [FF44+]
-  // [NOTE] See second listed bug: may cause black on black for elements with undefined colors
-  // [SETUP-CHROME] Might affect CSS in themes and extensions
-  // [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=232227,1330876
+   // [NOTE] See second listed bug: may cause black on black for elements with undefined colors
+   // [SETUP-CHROME] Might affect CSS in themes and extensions
+   // [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=232227,1330876
 pref("ui.use_standins_for_native_colors", true);
 // 4616: enforce prefers-color-scheme as light [FF67+]
-  // 0=light, 1=dark : This overrides your OS value
+   // 0=light, 1=dark : This overrides your OS value
 pref("ui.systemUsesDarkTheme", 0); // [HIDDEN PREF]
 // * * * /
 // ***/
@@ -1647,8 +1643,8 @@ pref("network.manage-offline-status", false); // see bugzilla 620472 //BRACE-UNC
    // pref("xpinstall.signatures.required", false); // enforced extension signing (Nightly/ESR)
 
 /*** [SECTION 9999]: DEPRECATED / REMOVED / LEGACY / RENAMED
-     Documentation denoted as [-]. Items deprecated prior to FF68 have been archived at [1], which
-     also provides a link-clickable, viewer-friendly version of the deprecated bugzilla tickets
+     Documentation denoted as [-]. Items deprecated in FF68 or earlier have been archived at [1],
+     which also provides a link-clickable, viewer-friendly version of the deprecated bugzilla tickets
      [1] https://github.com/ghacksuserjs/ghacks-user.js/issues/123
 ***/
 pref("_user.js.parrot", "9999 syntax error: the parrot's deprecated!");
@@ -1676,6 +1672,23 @@ pref("devtools.webide.autoinstallADBExtension", false); // [FF64+]
    // [2] https://bugzilla.mozilla.org/959985
    // [-] https://bugzilla.mozilla.org/1574480
 pref("offline-apps.allow_by_default", false);
+// * * * /
+// FF72
+// 0105a: disable Activity Stream telemetry
+   // [-] https://bugzilla.mozilla.org/1597697
+pref("browser.newtabpage.activity-stream.telemetry.ping.endpoint", "");
+// 0330: disable Hybdrid Content telemetry
+   // [-] https://bugzilla.mozilla.org/1520491
+pref("toolkit.telemetry.hybridContent.enabled", false); // [FF59+]
+// 2720: enforce IndexedDB (IDB) as enabled
+   // IDB is required for extensions and Firefox internals (even before FF63 in [1])
+   // To control *website* IDB data, control allowing cookies and service workers, or use
+   // Temporary Containers. To mitigate *website* IDB, FPI helps (4001), and/or sanitize
+   // on close (Offline Website Data, see 2800) or on-demand (Ctrl-Shift-Del), or automatically
+   // via an extension. Note that IDB currently cannot be sanitized by host.
+   // [1] https://blog.mozilla.org/addons/2018/08/03/new-backend-for-storage-local-api/
+   // [-] https://bugzilla.mozilla.org/1488583
+pref("dom.indexedDB.enabled", true); // [DEFAULT: true]
 // * * * /
 // ***/
 

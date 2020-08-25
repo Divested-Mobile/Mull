@@ -9,9 +9,9 @@ It was originally created as builds of the patchset from [bug 1419581](https://b
 
 Deprecation Notice
 ------------------
-Fennec (Firefox for Android) is in strict maintenance mode and only supported on the ESR68 branch.
-Fenix is the future replacement, but is currently under heavy development.
-Being said, Mull most likely doesn't have long to live.
+Fennec (Firefox for Android) is completely deprecated and ESR 68.12 is the final version.
+Fenix is the replacement, but currently includes many proprietary dependencies.
+Fennec based Mull will not be around much longer.
 
 Faster builds
 -------------

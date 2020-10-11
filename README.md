@@ -4,7 +4,7 @@ Mull
 Overview
 --------
 Mull is kinda sorta Tor Browser Android, but without routing over Tor network and upstream Firefox.
-It enables many features upstreamed by the Tor Uplift project through @ghacksuserjs and @pyllyukko's user.js projects.
+It enables many features upstreamed by the Tor Uplift project through @arkenfox and @pyllyukko's user.js projects.
 It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
 
 Deprecation Notice

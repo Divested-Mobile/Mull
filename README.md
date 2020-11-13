@@ -10,8 +10,7 @@ It was originally created as builds of the patchset from [bug 1419581](https://b
 Deprecation Notice
 ------------------
 Fennec (Firefox for Android) is completely deprecated and ESR 68.12 is the final version.
-Fenix is the replacement, but currently includes many proprietary dependencies.
-Fennec based Mull will not be around much longer.
+Fenix is the replacement and mull-fenix is available.
 
 Faster builds
 -------------

@@ -50,3 +50,10 @@ TODO
 - Default Search
 - Default top sites
 - Further pilfer patches from Tor Browser Android
+
+Notices
+-------
+- Mozilla Firefox is a trademark of The Mozilla Foundation
+- Divested Computing Group is not affiliated with Mozilla
+- Mull is not sponsored or endorsed by Mozilla
+- Firefox source code is available at https://hg.mozilla.org

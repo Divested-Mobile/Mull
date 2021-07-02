@@ -7,6 +7,10 @@ Mull is kinda sorta Tor Browser Android, but without routing over Tor network an
 It enables many features upstreamed by the Tor Uplift project through @arkenfox and @pyllyukko's user.js projects.
 It was originally created as builds of the patchset from [bug 1419581](https://bugzilla.mozilla.org/show_bug.cgi?id=1419581).
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/us.spotco.fennec_dos/)
+
 Deprecation Notice
 ------------------
 Fennec (Firefox for Android) is completely deprecated and ESR 68.12 is the final version.
@@ -50,6 +54,10 @@ TODO
 - Default Search
 - Default top sites
 - Further pilfer patches from Tor Browser Android
+
+Credits
+-------
+- Icon: Google/Android/AOSP, License: Apache 2.0, https://google.github.io/material-design-icons/
 
 Notices
 -------
